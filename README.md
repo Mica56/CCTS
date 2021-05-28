@@ -44,7 +44,7 @@ Find a suitable area to put the files and type the command.
 ```
   - git clone https://github.com/Mica56/DAA-Project.git
 ```
-# Modify only the folder you are assigned to.
+# Add changes on the folder DAA-Project on your local machine.
 
 # Step 3 : Submitting my work
 
