@@ -1,0 +1,18 @@
+
+body {
+    box-sizing: border-box;
+}
+#video {
+    /* width: 50;
+    height: 50; */
+    object-fit: contain;
+    position: relative;
+    overflow: hidden;
+
+}
+
+#videoContainer {
+    height: 50vh;
+    /* width: 50%; */
+
+}

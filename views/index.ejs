@@ -1,0 +1,53 @@
+<%- include('./header'); %> 
+
+
+  <!-- We are using Node.js <span id="node-version"></span>,
+  Chromium <span id="chrome-version"></span>,
+  and Electron <span id="electron-version"></span>. -->
+
+  <!-- Start of main container -->
+  <div class="container">
+    <div id="videoContainer" class="card" >
+      <video id="video"></video>
+    </div>
+    <!-- start of card body -->
+    <div class="card-body text-center">
+    <button id="entryScanBtn" class="btn btn-success">Entrance</button>
+    <button id="exitScanBtn" class="btn btn-warning">Exit</button>
+    <button id="stopScanBtn" class="btn btn-danger">stop</button>
+    </div>
+    <!-- end of card body -->
+
+   
+    <!-- start of button and input form container -->
+    <div class="container text-center">
+       <!-- start of buttons container -->
+      <div class="container">
+        <button id="mainBtn" class="btn btn-light">test Main</button>
+        <button id="queryVisitorsBtn" class="btn btn-light">Get Visitors</button>
+        <button id="reloadBtn" class="btn btn-light">Reload</button>
+        <button id="getDataBtn" class="btn btn-light">Fetch Data</button>
+        <button id="printBtn" class="btn btn-light">print</button>
+        <button id="testBtn" type="button">test</button>
+      </div>
+      <!-- end of buttons container -->
+
+      <!-- start of input form container -->
+      <!-- <div class="container my-3">
+        <form id='form' class='form'>
+          <input id="searchInput" type="text"  class='form-control'>
+          <input type='submit' class="btn btn-primary">
+        </form>
+      </div> -->
+      <!-- end of input form container -->
+      
+    </div>
+    <!-- end of button and input form container -->
+
+  </div>
+  <!-- End of main container -->
+  <script type="text/javascript" src = "../renderers/jQueryRenderer.js"></script>
+  <script src="../renderers/require.js"></script>
+  <script src="../renderers/indexRenderer.js"></script>
+
+<%- include('./footer'); %> 

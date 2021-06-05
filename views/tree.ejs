@@ -1,0 +1,17 @@
+<%- include('./header'); %> 
+    
+    <div class='container text-center'>
+      <h1>This is for the tree</h1>
+    </div>
+   
+    <div id="chart-container"></div>
+    
+    <!-- Problem: the code is working if we use 2 script of the jquery or using another from remote and the local -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
+    <!-- <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script> -->
+    <script type="text/javascript" src = "../renderers/jQueryRenderer.js"></script>
+    <script type="text/javascript" src="../node_modules/jquery-mockjax/dist/jquery.mockjax.min.js"></script>
+    <script type="text/javascript" src="../node_modules/orgchart/dist/js/jquery.orgchart.min.js"></script>
+    <script type="text/javascript" src="../renderers/treeRenderer.js"></script>
+    
+<%- include('./footer'); %>

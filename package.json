@@ -1,0 +1,35 @@
+{
+  "name": "project-daa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kathulhur/PROJECT-DAA.git"
+  },
+  "keywords": [
+    "contact-tracing",
+    "scanner",
+    "covid-19"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kathulhur/PROJECT-DAA/issues"
+  },
+  "homepage": "https://github.com/kathulhur/PROJECT-DAA#readme",
+  "devDependencies": {
+    "electron": "^13.0.1"
+  },
+  "dependencies": {
+    "ejs-electron": "^2.1.1",
+    "jquery": "^3.6.0",
+    "mongoose": "^5.12.12",
+    "orgchart": "^3.1.1",
+    "qr-scanner": "^1.2.0"
+  }
+}
