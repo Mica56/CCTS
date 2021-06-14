@@ -1,26 +1,37 @@
+/*
+  #navigationBar
+  * This file contains all the handlers that is similar to all the page like the navigation bar 
+  * Check out the elements in the header page
+*/
+
+// Note: you may want to modify the id's of the elements
+
+// @clar:add --> get all the buttons and store them in variables
+
+// @clar:note --> follow the same setup with the test code that I made below
+
+// @clar:add --> setup the click event for the "to index page" button
+  //@micaela:add --> emit an event for directing the page to the index page
+
+
+// @clar:add --> setup the click event for the "to data page" button
+  //@micaela:add --> emit an event for directing the page to the data page
+
+
+// @clar:add --> get the link button for the tree page and setup the click event
+  //@micaela:add --> emit an event for directing the page to the tree page
 
 
 /*
-  Handles the search event
-  @! THE SEARCH INSIDE THE DATA PAGE IS NOT WORKING
+  *@micaela --> this is your area to test the handlers if it works, put your code inside the function below
 */
 
-let searchForm          = document.getElementById('searchForm');
-let searchInput         = document.getElementById('searchInput');
-let treeBtn         = document.getElementById('treeBtn');
+$('a#testButton').click(function (event) {
+  event.preventDefault();// @clar:note always add this line inside the function of the click event
+  alert('It works!');
+  // place your event emitters here
+})
 
-searchForm.addEventListener('submit', function (event) {
-    console.log("hello");
-    console.log(searchInput);
-    console.log(searchInput.value);
-    ipcRenderer.send('request:search', searchInput.value);
-    console.log('request:search');
-    // event.preventDefault();
-});
 
-treeBtn.addEventListener('click', function (event) {
-  ipcRenderer.send('page:tree');
-  console.log("sent: page:tree");
-  
-});
+
 

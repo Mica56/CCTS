@@ -25,17 +25,22 @@
       <div class="container mx-1">
 
         <!-- start of home (logo) button -->
-        <a class="navbar-brand" href="./index.ejs">
+        <a id="indexPageButton" class="navbar-brand" href="none">
           Contact Tracing
         </a>
         <!-- end of home/logo button -->
       </div>
       <!-- end of nav container -->
-      <a id="treeBtn" class="nav-link active" aria-current="page" href="./tree.ejs">Tree</a>
+
+      
+      <a id="dataPageButton" class="nav-link active" aria-current="page" href="none">Data</a>
+      <a id="treePageButton" class="nav-link active" aria-current="page" href="none">Tree</a>
+      <a id="testButton" class="nav-link active" aria-current="page" href="none">Test</a>
 
       <form id="searchForm" class="d-flex">
         <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button id="searchBtn" class="btn btn-outline-success" type="submit">Search</button>
+
       </form>
 
     </nav>

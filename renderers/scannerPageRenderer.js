@@ -1,23 +1,19 @@
-
-
+/*
+  This file contains all the javascript codes for the scanner page 
+*/
 const QrScanner = require('qr-scanner');
 QrScanner.WORKER_PATH = path.normalize(path.normalize(__dirname + '/../node_modules/qr-scanner/qr-scanner-worker.min.js'));
 
 // cache all the elements needed
-let videoElement        = document.getElementById('video');
+let videoElement        = $('video#video');
 let entryScanBtn        = document.getElementById('entryScanBtn');
 let exitScanBtn         = document.getElementById('exitScanBtn');
 let stopScanBtn         = document.getElementById('stopScanBtn');
-let queryVisitorsBtn    = document.getElementById('queryVisitorsBtn');
-let reloadBtn           = document.getElementById('reloadBtn');
 
-let getDataBtn          = document.getElementById('getDataBtn');
-let printBtn            = document.getElementById('printBtn');
-let searchBtn           = document.getElementById('searchBtn');
 
 /*
-    ---------------------------------------
-    Setup the entry scanner
+  * @ done
+  * Instantiate the exit scanner
 */
 let QrScannerEntry = new QrScanner(videoElement, (result) => {
     console.log('result: ', result);
@@ -28,7 +24,10 @@ let QrScannerEntry = new QrScanner(videoElement, (result) => {
     ipcRenderer.send('entry:detected', result);
 });
 
-  
+/*
+    @modify:clar --> use jQuery for getting the element and adding eventhandlers
+    * Start the scanner when the entrace button is clicked
+*/
 entryScanBtn.addEventListener('click', () => {
     console.log('scanning');
     QrScannerEntry.start();
@@ -36,8 +35,8 @@ entryScanBtn.addEventListener('click', () => {
 
 
 /*
-    ---------------------------------------
-    Setup the exit scanner
+  * @ done
+  *  Instantiate the exit scanner
 */
 QrScannerExit = new QrScanner(videoElement, (result) => {
     console.log('result: ', result);
@@ -48,15 +47,17 @@ QrScannerExit = new QrScanner(videoElement, (result) => {
     ipcRenderer.send('exit:detected', result);
   });
 
-//  start the scan if exit scan button is clicked
+/*
+    @modify:clar --> use jQuery for getting the element and adding eventhandlers
+    * Start the scanner when the exit button is clicked
+*/
 exitScanBtn.addEventListener('click', () => {
     console.log('scanning');
     QrScannerExit.start();
 });
 
-
 /*
-    ---------------------------------------
+    @done
     stop any QrScanner from running
 */
 stopScanBtn.addEventListener('click', () => {
@@ -72,39 +73,3 @@ stopScanBtn.addEventListener('click', () => {
 });
 
 
-// 
-getDataBtn.onclick = function () {
-    ipcRenderer.send('request:dataWindow');
-    console.log('clicked : request:dataWindow');
-}
-
-queryVisitorsBtn.onclick = function () {
-    ipcRenderer.invoke('query:visitors')
-      .then( (result) => {
-        
-        for(const data in result._doc){
-          console.log(result._doc[data]);
-        }
-      });
-}
-
-
-printBtn.onclick = function () {
-    ipcRenderer.send('request:printToPdf');
-    console.log('sent- request:printToPdf');
-}
-
-/*
-    ---------------------------------------
-    reload the window on click
-*/
-reloadBtn.onclick = function () {
-  ipcRenderer.send('request:reload');
-  console.log('sent: ', 'request:reload');
-}
-
-
-$('button#testBtn').click( async function () {
-  let result = await ipcRenderer.invoke('test:request', "this is an arg");
-  alert(result[0]._doc['name']);
-});

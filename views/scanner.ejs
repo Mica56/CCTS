@@ -1,0 +1,23 @@
+<%- include('./header'); %> 
+
+  <!-- Start of main container -->
+  <div class="container">
+    <div id="videoContainer" class="card" >
+      <video id="video"></video>
+    </div>
+    <!-- start of card body -->
+    <div class="card-body text-center">
+    <button id="entryScanBtn" class="btn btn-success">Entrance</button>
+    <button id="exitScanBtn" class="btn btn-warning">Exit</button>
+    <button id="stopScanBtn" class="btn btn-danger">stop</button>
+    </div>
+    <!-- end of card body -->
+
+
+  </div>
+
+  <!-- End of main container -->
+  <script src="../renderers/require.js"></script>
+  <script src="../renderers/scannerPageRenderer.js"></script>
+
+<%- include('./footer'); %> 
