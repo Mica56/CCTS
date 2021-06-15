@@ -78,10 +78,21 @@ app.on('window-all-closed', function () {
 */
 
 // @add:micaela --> add the handler for directing to the index page
+ipcMain.on('page:index', (event) => {
+    console.log("request successful");
+});
 // @add:micaela --> add the handler for directing to the data page
+ipcMain.on('page:data', (event) => {
+    console.log("request successful");
+});
 // @add:micaela --> add the handler for directing to the tree page
+ipcMain.on('page:tree', (event) => {
+    console.log("request successful");
+});
 
-
+ipcMain.on('test', (event) => {
+    console.log("request successful");
+})
 
 /*
     #scannerPage

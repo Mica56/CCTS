@@ -4,6 +4,8 @@
   * Check out the elements in the header page
 */
 
+const { ipcRenderer } = require("electron");
+
 // Note: you may want to modify the id's of the elements
 
 // @clar:add --> get all the buttons and store them in variables
@@ -18,7 +20,7 @@ let testBtn = $('a#testButton');
 // @clar:note --> follow the same setup with the test code that I made below
 /* ----- INDEX BUTTON ----- */
 $('a#indexPageButton').click(function(){
-  event.preventDefault();
+  //event.preventDefault();
   alert('Go to Index Page!');
 });
 
@@ -50,18 +52,24 @@ $('a#testButton').click(function (event) {
 
 // @clar:add --> setup the click event for the "to index page" button
 indexPageBtn.click(function(){
+  ipcRenderer.send('page:index');
+  console.log('sending request to main..');
   // @micaela:add --> emit an event for directing the page to the index page
 });
 
 
 // @clar:add --> setup the click event for the "to data page" button
 dataPageBtn.click(function(){
+  ipcRenderer.send('page:data');
+  console.log('sending request to main..');
   //@micaela:add --> emit an event for directing the page to the data page
 });
   
 
 // @clar:add --> get the link button for the tree page and setup the click event
 treePageBtn.click(function(){
+  ipcRenderer.send('page:tree');
+  console.log('sending request to main..');
   //@micaela:add --> emit an event for directing the page to the tree page
 });
 
