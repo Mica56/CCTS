@@ -34,6 +34,12 @@ treePageBtn.click(function(){
   //@micaela:add --> emit an event for directing the page to the tree page
 });
 
+// @clar:add --> setup the click event for the "to scan page" button
+  //@micaela:add --> emit an event for directing the page to the scan page
+
+  
+// @clar:add --> setup the click event for the "to register page" button
+  //@micaela:add --> emit an event for directing the page to the register page
 
 
 // @sep,@micai fr @clar :: search button click event [for data page]
