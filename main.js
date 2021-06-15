@@ -22,8 +22,11 @@ db.once('open', async function () {
     try {
         visitors = await VisitorModel.find({}).exec()
         console.log('visitor found');
+        // console.log(visitors);
         establishments = await EstablishmentModel.find({}).exec();
+        // console.log(establishments);
         visits = await VisitModel.find({}).exec();
+        // console.log(visits);
     } catch (err) {
         console.log(err);
     }

@@ -41,6 +41,7 @@ testBtn.click(function(event){
   event.preventDefault();
   ipcRenderer.send('test', 'this is working.');
 });
+
 // @clar:add --> setup the click event for the "to scan page" button
   //@micaela:add --> emit an event for directing the page to the scan page
 
