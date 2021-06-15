@@ -80,19 +80,18 @@ app.on('window-all-closed', function () {
     Below are the handlers for the navigation bar (templateRenderer)
 */
 
-// @add:micaela --> add the handler for directing to the index page
 ipcMain.on('reqIndex', (event, msg)=>{
     console.log(msg);
 });
-// @add:micaela --> add the handler for directing to the data page
+
 ipcMain.on('reqData', (event, msg)=>{
     console.log(msg);
 });
-// @add:micaela --> add the handler for directing to the tree page
+
 ipcMain.on('reqTree', (event, msg)=>{
     console.log(msg);
 });
-
+//for testing stuff
 ipcMain.on('test', (event, msg)=>{
     console.log(msg);
 });
