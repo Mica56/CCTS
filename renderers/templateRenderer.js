@@ -4,8 +4,6 @@
   * Check out the elements in the header page
 */
 
-const { ipcRenderer } = require("electron");
-
 // Note: you may want to modify the id's of the elements
 
 // @clar:add --> get all the buttons and store them in variables
