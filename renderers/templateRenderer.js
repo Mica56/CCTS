@@ -10,25 +10,27 @@
 let indexPageBtn = $('a#indexPageButton');
 let dataPageBtn = $('a#dataPageButton');
 let treePageBtn = $('a#treePageButton');
-let searchBtn = $('button#searchButton');
 
 let testBtn = $('a#testButton');
 
 
 // @clar:add --> setup the click event for the "to index page" button
-indexPageBtn.click(function(){
+indexPageBtn.click(function(event){
+  event.preventDefault();
   // @micaela:add --> emit an event for directing the page to the index page
 });
 
 
 // @clar:add --> setup the click event for the "to data page" button
 dataPageBtn.click(function(){
+  event.preventDefault();
   //@micaela:add --> emit an event for directing the page to the data page
 });
   
 
 // @clar:add --> get the link button for the tree page and setup the click event
 treePageBtn.click(function(){
+  event.preventDefault();
   //@micaela:add --> emit an event for directing the page to the tree page
 });
 
