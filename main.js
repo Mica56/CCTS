@@ -75,22 +75,27 @@ app.on('window-all-closed', function () {
 });
 
 /*
-    #navigationBar
+    #navigationBar (templateRenderer.js)
     @unfinished
-    Below are the handlers for the navigation bar (templateRenderer)
+    Below are the handlers for the navigation bar 
 */
 
-// @add:micaela --> add the handler for directing to the index page
+// @micaela:add --> add the handler for directing to the index page
 ipcMain.on('reqIndex', (event, msg)=>{
     console.log(msg);
+    win.loadURL(`file://${__dirname}/views/index.ejs`)
 });
-// @add:micaela --> add the handler for directing to the data page
+
+// @micaela:add --> add the handler for directing to the data page
 ipcMain.on('reqData', (event, msg)=>{
     console.log(msg);
+    win.loadURL(`file://${__dirname}/views/establishment.ejs`);
 });
-// @add:micaela --> add the handler for directing to the tree page
+
+// @micaela:add --> add the handler for directing to the tree page
 ipcMain.on('reqTree', (event, msg)=>{
     console.log(msg);
+    win.loadURL(`file://${__dirname}/views/tree.ejs`)
 });
 
 ipcMain.on('test', (event, msg)=>{
@@ -99,11 +104,51 @@ ipcMain.on('test', (event, msg)=>{
 
 
 /*
-    #scannerPage
+    #navigationBar (dataNavigationRenderer.js)
+    @unfinished
+    Below are the handlers for the navigation bar of the data pages
+*/
+
+// @micaela:add --> micaela:addhe handler for directing to the establishment data page
+// @micaela:add --> add the handler for directing to the visitor data page
+// @micaela:add --> add the handler for directing to the visit data page
+
+
+/*
+    #EstablishmentDataPage (establishmentDataPage.js)
+    @unfinished
+    Below are the handlers for the establishment data page
+*/
+
+// @micaela:add --> add the handler for request of establishment data
+
+
+/*
+    #visitorDataPage (visitorDataPage.js)
+    @unfinished
+    Below are the handlers for the visitor data page
+*/
+
+// @micaela:add --> add the handler for the request of visitor data
+
+
+/*
+    #visitDataPage (visitDataPage.js)
+    @unfinished
+    Below are the handlers for the visit data apge
+*/
+
+// @micaela:add --> add the handler for the request of visit data
+
+
+
+/*
+    #scannerPage (scannerPageRenderer.js)
     @modify:joseph --> think of how to set the establishment for the app
 
     Below are the handlers for the scanner page
 */
+
 ipcMain.on('entry:detected', async (event, id) => {
     console.log('entry:detected');
 
@@ -135,7 +180,7 @@ ipcMain.on('entry:detected', async (event, id) => {
 });
 
 /*
-    @modify:das --> rewrite the queries using the async await syntax
+    @das:modify --> rewrite the queries using the async await syntax
     Handle exit detection
 */
 ipcMain.on('exit:detected', (event, id) => {
