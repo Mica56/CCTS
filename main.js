@@ -81,9 +81,21 @@ app.on('window-all-closed', function () {
 */
 
 // @add:micaela --> add the handler for directing to the index page
+ipcMain.on('reqIndex', (event, msg)=>{
+    console.log(msg);
+});
 // @add:micaela --> add the handler for directing to the data page
+ipcMain.on('reqData', (event, msg)=>{
+    console.log(msg);
+});
 // @add:micaela --> add the handler for directing to the tree page
+ipcMain.on('reqTree', (event, msg)=>{
+    console.log(msg);
+});
 
+ipcMain.on('test', (event, msg)=>{
+    console.log(msg);
+});
 
 
 /*
