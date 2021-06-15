@@ -4,6 +4,8 @@
   * Check out the elements in the header page
 */
 
+const { ipcRenderer } = require("electron");
+
 // Note: you may want to modify the id's of the elements
 
 // @clar:add --> get all the buttons and store them in variables
@@ -17,6 +19,7 @@ let testBtn = $('a#testButton');
 // @clar:add --> setup the click event for the "to index page" button
 indexPageBtn.click(function(event){
   event.preventDefault();
+  ipcRenderer.send('reqIndex', 'access to Index page successful.');
   // @micaela:add --> emit an event for directing the page to the index page
 });
 
@@ -34,6 +37,10 @@ treePageBtn.click(function(){
   //@micaela:add --> emit an event for directing the page to the tree page
 });
 
+testBtn.click(function(){
+  event.preventDefault();
+  ipcRenderer.send('test', 'this is working.');
+});
 // @clar:add --> setup the click event for the "to scan page" button
   //@micaela:add --> emit an event for directing the page to the scan page
 
