@@ -6,9 +6,9 @@ QrScanner.WORKER_PATH = path.normalize(path.normalize(__dirname + '/../node_modu
 
 // cache all the elements needed
 let videoElement        = $('video#video');
-let entryScanBtn        = document.getElementById('entryScanBtn');
-let exitScanBtn         = document.getElementById('exitScanBtn');
-let stopScanBtn         = document.getElementById('stopScanBtn');
+let entryScanBtn        = $('#entryScanBtn');
+let exitScanBtn         = $('#exitScanBtn');
+let stopScanBtn         = $('#stopScanBtn');
 
 
 /*
@@ -28,7 +28,7 @@ let QrScannerEntry = new QrScanner(videoElement, (result) => {
     @modify:clar --> use jQuery for getting the element and adding eventhandlers
     * Start the scanner when the entrace button is clicked
 */
-entryScanBtn.addEventListener('click', () => {
+entryScanBtn.click(function(){
     console.log('scanning');
     QrScannerEntry.start();
 });
@@ -51,7 +51,7 @@ QrScannerExit = new QrScanner(videoElement, (result) => {
     @modify:clar --> use jQuery for getting the element and adding eventhandlers
     * Start the scanner when the exit button is clicked
 */
-exitScanBtn.addEventListener('click', () => {
+exitScanBtn.click(function(){
     console.log('scanning');
     QrScannerExit.start();
 });
