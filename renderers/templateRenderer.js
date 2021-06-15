@@ -25,19 +25,21 @@ indexPageBtn.click(function(event){
 
 
 // @clar:add --> setup the click event for the "to data page" button
-dataPageBtn.click(function(){
+dataPageBtn.click(function(event){
   event.preventDefault();
+  ipcRenderer.send('reqData', 'access to Data page successful.');
   //@micaela:add --> emit an event for directing the page to the data page
 });
   
 
 // @clar:add --> get the link button for the tree page and setup the click event
-treePageBtn.click(function(){
+treePageBtn.click(function(event){
   event.preventDefault();
+  ipcRenderer.send('reqTree', 'access to Tree page successful.');
   //@micaela:add --> emit an event for directing the page to the tree page
 });
 
-testBtn.click(function(){
+testBtn.click(function(event){
   event.preventDefault();
   ipcRenderer.send('test', 'this is working.');
 });
