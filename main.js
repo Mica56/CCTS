@@ -10,7 +10,11 @@ const EstablishmentModel = require('./models/establishmentModel.js');
 const VisitorModel = require('./models/visitorModel.js');
 const VisitModel = require('./models/visitModel.js');
 
-const treePageHandler = require('./handlers/treePageHandler');
+// import of handlers
+const treePageHandler = require('./handlers/treePageHandler.js');
+const scannerPageHandler = require('./handlers/scannerPageHandler.js');
+
+
 // setup mongodb database connection
 const mongoose = require('mongoose');
 const visitorModel = require('./models/visitorModel.js');
@@ -158,76 +162,13 @@ ipcMain.on('reqScan', function (event, msg) {
     win.loadURL(`file://${__dirname}/views/scanner.ejs`);
 })
 
-ipcMain.on('entry:detected', async (event, id) => {
-    console.log('entry:detected');
-
-    let visitor, establishment;
-    
-    try{
-        visitor = await VisitorModel.findById({_id: mongoose.Types.ObjectId(id) }).exec();
-        console.log('visitor matched!');
-    
-        establishment = await EstablishmentModel.findById({_id: mongoose.Types.ObjectId("60b64d198873311ec41b43f3")}).exec();
-        console.log('establishment matched!');
-    
-        // get the visitor instance
-        let visit = new VisitModel({
-            establishment: establishment,
-            visitor: visitor,
-        });
-
-        visit.save( function (err, visit) {
-            if (err) console.error('Error saving visit: ', err);
-            // console.log(visit);
-            console.log('entry sucessful!');
-        });
-
-    } catch (err) {
-        console.log(err);
-    }
-    
-});
+ipcMain.on('entry:detected', scannerPageHandler.entrance);
 
 /*
     @das:modify --> rewrite the queries using the async await syntax
     Handle exit detection
 */
-ipcMain.on('exit:detected', (event, id) => {
-    console.log('exit:detected');
-    let visitor, establishment;
-
-    // get the visitor instance
-    VisitorModel.findById({_id: mongoose.Types.ObjectId(id) }, (err, result) => {
-        if (err) console.error('Error finding visitor: ', err);// error finding visitor
-        // visitor found
-        // console.log(result);
-        visitor = result;
-
-        EstablishmentModel.findById({_id: mongoose.Types.ObjectId("60b64d198873311ec41b43f3")}, (err, result) => {
-            if (err) console.error('Error finding establishment: ', err);// error finding establishment
-            // establishment found
-            // console.log(result);
-            establishment = result;
-
-            VisitModel.findOneAndUpdate({visitor: visitor, establishment: establishment}).sort({entered: -1}).exec(
-                function (err, result){ // log the console if error
-                    if (err) console.error('Error updating visitor: ', err);
-
-                    // update success
-                    // console.log(result);
-                    result.exited = Date.now();
-                    result.save( (err, result) => {
-                        if(err) console.error('Error saving record', err);// saving error
-                        // saving success
-                        // console.log(result);
-                        
-                        console.log('exit success!');
-
-                    });
-                }); 
-        });
-    });
-});
+ipcMain.on('exit:detected', scannerPageHandler.exit);
 
 
 /*
