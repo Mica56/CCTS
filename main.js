@@ -10,6 +10,7 @@ const EstablishmentModel = require('./models/establishmentModel.js');
 const VisitorModel = require('./models/visitorModel.js');
 const VisitModel = require('./models/visitModel.js');
 
+const treePageHandler = require('./handlers/treePageHandler');
 // setup mongodb database connection
 const mongoose = require('mongoose');
 const visitorModel = require('./models/visitorModel.js');
@@ -98,9 +99,12 @@ ipcMain.on('reqTree', (event, msg)=>{
     win.loadURL(`file://${__dirname}/views/tree.ejs`)
 });
 
+// @micaela:add --> add the handler for directing to registration page
+
 ipcMain.on('test', (event, msg)=>{
     console.log(msg);
 });
+
 
 
 /*
@@ -144,10 +148,15 @@ ipcMain.on('test', (event, msg)=>{
 
 /*
     #scannerPage (scannerPageRenderer.js)
-    @modify:joseph --> think of how to set the establishment for the app
+    @joseph:modify --> think of how to set the establishment for the app
 
     Below are the handlers for the scanner page
 */
+
+ipcMain.on('reqScan', function (event, msg) {
+    console.log(msg);
+    win.loadURL(`file://${__dirname}/views/scanner.ejs`);
+})
 
 ipcMain.on('entry:detected', async (event, id) => {
     console.log('entry:detected');
@@ -220,4 +229,51 @@ ipcMain.on('exit:detected', (event, id) => {
     });
 });
 
+
+/*
+    #treePage (treePageRenderer.js)
+    Below are the handlers for the tree page
+*/
+ipcMain.handle('treePage:getData', treePageHandler.buildTree);
+
+
+/*
+    #registration (registrationRenderer.js)
+    Below are the handlers for the registration page
+*/
+
+
+
+/*
+    #registration (registrationRenderer.js)
+    Below are the handlers for the registration page
+*/
+
+// @micaela:add --> add the handler for directing to the visitor registration page
+// @micaela:add --> add the handler for directing to the establishment registration page
+// @micaela:add --> add the handler for directing to the admin registration page
+
+
+/*
+    #visitorRegistration (visitorRegistrationRenderer.js)
+    Below are the handlers for the visitor registration page
+*/
+
+// @micaela:add --> add the handler for the request of writing the visitor data into the database
+
+
+/*
+    #establishmentRegistration (establishmentRegistrationRenderer.js)
+    Below are the handlers for the establishment registration page
+*/
+
+// @micaela:add --> add the handler for the request of writing the establishment data into the database
+
+
+/*
+    #adminRegistration (adminRegistrationRenderer.js)
+    Below are the handlers for the admin registration page
+*/
+
+// @micaela:add --> add the handler for the request of writing the admin data into the database
 

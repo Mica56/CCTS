@@ -1,0 +1,33 @@
+<%- include('./header'); %> 
+
+    <form id="establishmentForm">
+        <div class="m-3">
+            <label for="nameInput" class="form-label">Name</label>
+            <input id="nameInput" class="form-control" type="text" placeholder="Your name" aria-label="default input example">
+        </div>
+        <div class="m-3">
+            <label for="addressInput" class="form-label">Address</label>
+            <input id="addressInput" class="form-control" type="text" placeholder="Your Address" aria-label="default input example">
+        </div>
+        <div class="m-3">
+            <label for="ownerInput" class="form-label">Owner</label>
+            <input id="ownerInput" class="form-control" type="text" placeholder="Your Number" aria-label="default input example">
+        </div>
+        <div class="m-3">
+            <label for="contactNumberInput" class="form-label">Contact Number</label>
+            <input id="contactNumberInput" class="form-control" type="text" placeholder="Your Number" aria-label="default input example">
+        </div>
+        <div class="m-3">
+            <label for="emailInput" class="form-label">Email</label>
+            <input id="emailInput" class="form-control" type="text" placeholder="youremail@example.com" aria-label="default input example">
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Sign in</button>
+        
+    </form>
+    
+    <script src="../renderers/require.js"></script>
+    <script src="../renderers/establishmentRegistrationRenderer.js"></script>
+
+<%- include('./footer'); %> 

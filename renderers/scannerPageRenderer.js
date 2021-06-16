@@ -15,7 +15,8 @@ let stopScanBtn         = $('#stopScanBtn');
   * @ done
   * Instantiate the exit scanner
 */
-let QrScannerEntry = new QrScanner(videoElement, (result) => {
+
+const QrScannerEntry = new QrScanner(document.getElementById('video'), (result) => {
     console.log('result: ', result);
     QrScannerEntry.stop();
     console.log('stopped');
@@ -30,7 +31,9 @@ let QrScannerEntry = new QrScanner(videoElement, (result) => {
 */
 entryScanBtn.click(function(){
     console.log('scanning');
-    QrScannerEntry.start();
+    if(!QrScannerEntry._active){
+      QrScannerEntry.start();
+    }
 });
 
 
@@ -38,7 +41,7 @@ entryScanBtn.click(function(){
   * @ done
   *  Instantiate the exit scanner
 */
-QrScannerExit = new QrScanner(videoElement, (result) => {
+QrScannerExit = new QrScanner(document.getElementById('video'), (result) => {
     console.log('result: ', result);
     QrScannerExit.stop();
     console.log('stopped');
@@ -53,14 +56,16 @@ QrScannerExit = new QrScanner(videoElement, (result) => {
 */
 exitScanBtn.click(function(){
     console.log('scanning');
-    QrScannerExit.start();
+    if(!QrScannerExit._active){
+      QrScannerExit.start();
+    }
 });
 
 /*
     @done
     stop any QrScanner from running
 */
-stopScanBtn.addEventListener('click', () => {
+stopScanBtn.click(() => {
     console.log('stopped');
 
     if(QrScannerEntry._active){// stop the entry scanner if active

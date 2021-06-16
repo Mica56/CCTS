@@ -45,7 +45,7 @@ treePageBtn.click(function(event){
 scanPageBtn.click(function(event){
   event.preventDefault();
   alert('Scan Page');
-  //@micaela:add --> emit an event for directing the page to the scan page
+  ipcRenderer.send('reqScan', 'access to Scan page successful.');
 });
   
   
