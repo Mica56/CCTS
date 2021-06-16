@@ -10,6 +10,8 @@
 let indexPageBtn = $('a#indexPageButton');
 let dataPageBtn = $('a#dataPageButton');
 let treePageBtn = $('a#treePageButton');
+let scanPageBtn = $('a#scanPageButton');
+let regiPageBtn = $('a#registerPageButton');
 
 let testBtn = $('a#testButton');
 
@@ -37,17 +39,26 @@ treePageBtn.click(function(event){
   //@micaela:add --> emit an event for directing the page to the tree page
 });
 
+
+// @clar:add --> setup the click event for the "to scan page" button
+scanPageBtn.click(function(event){
+  event.preventDefault();
+  alert('Scan Page');
+  ipcRenderer.send('reqScan', 'access to Scan page successful.');
+});
+  
+  
+// @clar:add --> setup the click event for the "to register page" button
+regiPageBtn.click(function(event){
+  event.preventDefault();
+  alert('Register Page');
+  //@micaela:add --> emit an event for directing the page to the register page
+});
+
 testBtn.click(function(event){
   event.preventDefault();
   ipcRenderer.send('test', 'this is working.');
 });
-
-// @clar:add --> setup the click event for the "to scan page" button
-  //@micaela:add --> emit an event for directing the page to the scan page
-
-  
-// @clar:add --> setup the click event for the "to register page" button
-  //@micaela:add --> emit an event for directing the page to the register page
 
 
 // @sep,@micai fr @clar :: search button click event [for data page]

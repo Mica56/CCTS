@@ -10,6 +10,11 @@ const EstablishmentModel = require('./models/establishmentModel.js');
 const VisitorModel = require('./models/visitorModel.js');
 const VisitModel = require('./models/visitModel.js');
 
+// import of handlers
+const treePageHandler = require('./handlers/treePageHandler.js');
+const scannerPageHandler = require('./handlers/scannerPageHandler.js');
+
+
 // setup mongodb database connection
 const mongoose = require('mongoose');
 const visitorModel = require('./models/visitorModel.js');
@@ -75,104 +80,141 @@ app.on('window-all-closed', function () {
 });
 
 /*
-    #navigationBar
+    #navigationBar (templateRenderer.js)
     @unfinished
-    Below are the handlers for the navigation bar (templateRenderer)
+    Below are the handlers for the navigation bar 
 */
 
-// @add:micaela --> add the handler for directing to the index page
+// @micaela:add --> add the handler for directing to the index page
 ipcMain.on('reqIndex', (event, msg)=>{
     console.log(msg);
+    win.loadURL(`file://${__dirname}/views/index.ejs`)
 });
-// @add:micaela --> add the handler for directing to the data page
+
+// @micaela:add --> add the handler for directing to the data page
 ipcMain.on('reqData', (event, msg)=>{
     console.log(msg);
+    win.loadURL(`file://${__dirname}/views/establishment.ejs`);
 });
-// @add:micaela --> add the handler for directing to the tree page
+
+// @micaela:add --> add the handler for directing to the tree page
 ipcMain.on('reqTree', (event, msg)=>{
     console.log(msg);
+    win.loadURL(`file://${__dirname}/views/tree.ejs`)
 });
+
+// @micaela:add --> add the handler for directing to registration page
 
 ipcMain.on('test', (event, msg)=>{
     console.log(msg);
 });
 
 
+
 /*
-    #scannerPage
-    @modify:joseph --> think of how to set the establishment for the app
+    #navigationBar (dataNavigationRenderer.js)
+    @unfinished
+    Below are the handlers for the navigation bar of the data pages
+*/
+
+// @micaela:add --> micaela:addhe handler for directing to the establishment data page
+// @micaela:add --> add the handler for directing to the visitor data page
+// @micaela:add --> add the handler for directing to the visit data page
+
+
+/*
+    #EstablishmentDataPage (establishmentDataPage.js)
+    @unfinished
+    Below are the handlers for the establishment data page
+*/
+
+// @micaela:add --> add the handler for request of establishment data
+
+
+/*
+    #visitorDataPage (visitorDataPage.js)
+    @unfinished
+    Below are the handlers for the visitor data page
+*/
+
+// @micaela:add --> add the handler for the request of visitor data
+
+
+/*
+    #visitDataPage (visitDataPage.js)
+    @unfinished
+    Below are the handlers for the visit data apge
+*/
+
+// @micaela:add --> add the handler for the request of visit data
+
+
+
+/*
+    #scannerPage (scannerPageRenderer.js)
+    @joseph:modify --> think of how to set the establishment for the app
 
     Below are the handlers for the scanner page
 */
-ipcMain.on('entry:detected', async (event, id) => {
-    console.log('entry:detected');
 
-    let visitor, establishment;
-    
-    try{
-        visitor = await VisitorModel.findById({_id: mongoose.Types.ObjectId(id) }).exec();
-        console.log('visitor matched!');
-    
-        establishment = await EstablishmentModel.findById({_id: mongoose.Types.ObjectId("60b64d198873311ec41b43f3")}).exec();
-        console.log('establishment matched!');
-    
-        // get the visitor instance
-        let visit = new VisitModel({
-            establishment: establishment,
-            visitor: visitor,
-        });
+ipcMain.on('reqScan', function (event, msg) {
+    console.log(msg);
+    win.loadURL(`file://${__dirname}/views/scanner.ejs`);
+})
 
-        visit.save( function (err, visit) {
-            if (err) console.error('Error saving visit: ', err);
-            // console.log(visit);
-            console.log('entry sucessful!');
-        });
-
-    } catch (err) {
-        console.log(err);
-    }
-    
-});
+ipcMain.on('entry:detected', scannerPageHandler.entrance);
 
 /*
-    @modify:das --> rewrite the queries using the async await syntax
+    @das:modify --> rewrite the queries using the async await syntax
     Handle exit detection
 */
-ipcMain.on('exit:detected', (event, id) => {
-    console.log('exit:detected');
-    let visitor, establishment;
+ipcMain.on('exit:detected', scannerPageHandler.exit);
 
-    // get the visitor instance
-    VisitorModel.findById({_id: mongoose.Types.ObjectId(id) }, (err, result) => {
-        if (err) console.error('Error finding visitor: ', err);// error finding visitor
-        // visitor found
-        // console.log(result);
-        visitor = result;
 
-        EstablishmentModel.findById({_id: mongoose.Types.ObjectId("60b64d198873311ec41b43f3")}, (err, result) => {
-            if (err) console.error('Error finding establishment: ', err);// error finding establishment
-            // establishment found
-            // console.log(result);
-            establishment = result;
+/*
+    #treePage (treePageRenderer.js)
+    Below are the handlers for the tree page
+*/
+ipcMain.handle('treePage:getData', treePageHandler.buildTree);
 
-            VisitModel.findOneAndUpdate({visitor: visitor, establishment: establishment}).sort({entered: -1}).exec(
-                function (err, result){ // log the console if error
-                    if (err) console.error('Error updating visitor: ', err);
 
-                    // update success
-                    // console.log(result);
-                    result.exited = Date.now();
-                    result.save( (err, result) => {
-                        if(err) console.error('Error saving record', err);// saving error
-                        // saving success
-                        // console.log(result);
-                        
-                        console.log('exit success!');
+/*
+    #registration (registrationRenderer.js)
+    Below are the handlers for the registration page
+*/
 
-                    });
-                }); 
-        });
-    });
-});
 
+
+/*
+    #registration (registrationRenderer.js)
+    Below are the handlers for the registration page
+*/
+
+// @micaela:add --> add the handler for directing to the visitor registration page
+// @micaela:add --> add the handler for directing to the establishment registration page
+// @micaela:add --> add the handler for directing to the admin registration page
+
+
+/*
+    #visitorRegistration (visitorRegistrationRenderer.js)
+    Below are the handlers for the visitor registration page
+*/
+
+// @micaela:add --> add the handler for the request of writing the visitor data into the database
+
+
+/*
+    #establishmentRegistration (establishmentRegistrationRenderer.js)
+    Below are the handlers for the establishment registration page
+*/
+
+// @micaela:add --> add the handler for the request of writing the establishment data into the database
+
+
+/*
+    #adminRegistration (adminRegistrationRenderer.js)
+    Below are the handlers for the admin registration page
+*/
+
+// @micaela:add --> add the handler for the request of writing the admin data into the database
 
