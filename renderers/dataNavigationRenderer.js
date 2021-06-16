@@ -12,7 +12,6 @@ establishmentTblBtn.click(function(event){
     event.preventDefault();
     alert('Establishment Table');
     ipcRenderer.send('reqEstablishment', 'access to Establishment page successful.');
-    // @micaela:add --> emit an event for directing the page to the establishment data page
 });
     
 
@@ -21,7 +20,6 @@ visitorTblBtn.click(function(event){
     event.preventDefault();
     alert('Visitor Table');
     ipcRenderer.send('reqVisitor', 'access to Visitor page successful.');
-    // @micaela:add --> emit an event for directing the page to the visitor data page
 });
     
 
@@ -30,5 +28,4 @@ visitTblBtn.click(function(event){
     event.preventDefault();
     alert('Visit Table');
     ipcRenderer.send('reqVisit', 'access to Visit Data page successful.');
-    // @micaela:add --> emit an event for directing the page to the visit data page
 });
