@@ -85,25 +85,25 @@ app.on('window-all-closed', function () {
     Below are the handlers for the navigation bar 
 */
 
-// @micaela:add --> add the handler for directing to the index page
 ipcMain.on('reqIndex', (event, msg)=>{
     console.log(msg);
     win.loadURL(`file://${__dirname}/views/index.ejs`)
 });
 
-// @micaela:add --> add the handler for directing to the data page
 ipcMain.on('reqData', (event, msg)=>{
     console.log(msg);
     win.loadURL(`file://${__dirname}/views/establishment.ejs`);
 });
 
-// @micaela:add --> add the handler for directing to the tree page
 ipcMain.on('reqTree', (event, msg)=>{
     console.log(msg);
     win.loadURL(`file://${__dirname}/views/tree.ejs`)
 });
 
-// @micaela:add --> add the handler for directing to registration page
+// for directing to register page
+ipcMain.on('reqRegister', (event, msg)=>{
+    console.log(msg);
+});
 
 ipcMain.on('test', (event, msg)=>{
     console.log(msg);
@@ -116,10 +116,18 @@ ipcMain.on('test', (event, msg)=>{
     @unfinished
     Below are the handlers for the navigation bar of the data pages
 */
-
-// @micaela:add --> micaela:addhe handler for directing to the establishment data page
-// @micaela:add --> add the handler for directing to the visitor data page
-// @micaela:add --> add the handler for directing to the visit data page
+//for directing to establishment page
+ipcMain.on('reqEstablishment', (event, msg)=>{
+    console.log(msg);
+});
+//for directing to visitor page
+ipcMain.on('reqVisitor', (event, msg)=>{
+    console.log(msg);
+});
+//for directing to visit data page
+ipcMain.on('reqVisit', (event, msg)=>{
+    console.log(msg);
+});
 
 
 /*

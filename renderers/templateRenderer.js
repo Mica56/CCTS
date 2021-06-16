@@ -20,7 +20,6 @@ let testBtn = $('a#testButton');
 indexPageBtn.click(function(event){
   event.preventDefault();
   ipcRenderer.send('reqIndex', 'access to Index page successful.');
-  // @micaela:add --> emit an event for directing the page to the index page
 });
 
 
@@ -28,7 +27,6 @@ indexPageBtn.click(function(event){
 dataPageBtn.click(function(event){
   event.preventDefault();
   ipcRenderer.send('reqData', 'access to Data page successful.');
-  //@micaela:add --> emit an event for directing the page to the data page
 });
   
 
@@ -36,7 +34,6 @@ dataPageBtn.click(function(event){
 treePageBtn.click(function(event){
   event.preventDefault();
   ipcRenderer.send('reqTree', 'access to Tree page successful.');
-  //@micaela:add --> emit an event for directing the page to the tree page
 });
 
 
@@ -52,7 +49,7 @@ scanPageBtn.click(function(event){
 regiPageBtn.click(function(event){
   event.preventDefault();
   alert('Register Page');
-  //@micaela:add --> emit an event for directing the page to the register page
+  ipcRenderer.send('reqRegister', 'access to Register page successful.');
 });
 
 testBtn.click(function(event){
