@@ -6,7 +6,9 @@ const VisitModel = require('../models/visitModel.js');
 
 
 
-exports.getEstablishments = async function() {
+exports.getVisitors = async function() {
+	var VisitorsVar = await VisitorModel.find({}).exec();
+	return VisitorsVar.toObject();
     /*  
         *   @das:add -->    Make a query to the database to fetch all the visitor data
         *       Note: call the 'toObject' method of the result of the query before returning it.
