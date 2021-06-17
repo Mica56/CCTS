@@ -202,9 +202,18 @@ ipcMain.handle('treePage:getData', treePageHandler.buildTree);
     Below are the handlers for the registration page
 */
 
-// @micaela:add --> add the handler for directing to the visitor registration page
-// @micaela:add --> add the handler for directing to the establishment registration page
-// @micaela:add --> add the handler for directing to the admin registration page
+// for directing to the visitor registration page
+ipcMain.on('reqVisitorReg', (event, msg)=>{
+    console.log(msg);
+});
+// for directing to the establishment registration page
+ipcMain.on('reqEstabReg', (event, msg)=>{
+    console.log(msg);
+});
+// for directing to the admin registration page
+ipcMain.on('reqAgminReg', (event, msg)=>{
+    console.log(msg);
+});
 
 
 /*

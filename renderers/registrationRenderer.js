@@ -14,19 +14,19 @@ let adminRegiBtn = $('a#adminRegistrationButton');
 visitorRegiBtn.click(function(event){
     event.preventDefault();
     alert('Visitor Registration Button');
-    // @micaela:add --> emit an event for directing the page to the visitor registration page
+    ipcRenderer.send('reqVisitorReg', 'access to Visitor registration page successful.');
 });
 
 // @clar:add --> use the variable you made above and set up their click event for the "to establishment registration page" button/link
 establishmentRegiBtn.click(function(event){
     event.preventDefault();
     alert('Establishment Registration Button');
-    // @micaela:add --> emit an event for directing the page to the establishment registration page
+    ipcRenderer.send('reqEstabReg', 'access to Establishment Registration page successful.');
 });
 
 // @clar:add --> use the variable you made above and set up their click event for the "to admin registration page" button/link
 adminRegiBtn.click(function(event){
     event.preventDefault();
     alert('Admin Registration Button');
-    // @micaela:add --> emit an event for directing the page to the admin registration page
+    ipcRenderer.send('reqAgminReg', 'access to Admin Registration page successful.');
 });
