@@ -13,7 +13,9 @@ const VisitModel = require('./models/visitModel.js');
 // import of handlers
 const treePageHandler = require('./handlers/treePageHandler.js');
 const scannerPageHandler = require('./handlers/scannerPageHandler.js');
-
+const establishmentDataPageHandler = require('./handlers/establishmentDataPageHandler.js');
+const visitDataPageHandler = require('./handlers/visitDataPageHandler.js');
+const visitorDataPageHandler = require('./handlers/visitorDataPageHandler.js');
 
 // setup mongodb database connection
 const mongoose = require('mongoose');
@@ -105,9 +107,7 @@ ipcMain.on('reqRegister', (event, msg)=>{
     console.log(msg);
 });
 
-ipcMain.on('test', (event, msg)=>{
-    console.log(msg);
-});
+ipcMain.on('test',visitorDataPageHandler.getVisitors);
 
 
 
