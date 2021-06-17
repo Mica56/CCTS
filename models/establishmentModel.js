@@ -7,6 +7,8 @@ const EstablishmentSchema = new Schema({
     owner: String,
     contactNumber: String,
     email: String,
+    username: String,
+    password: String,
     dateRegistered: { type: Date, default: Date.now }
 });
 

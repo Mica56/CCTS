@@ -8,17 +8,20 @@
 //  @clar:add --> Setup the submition of the form and collect all the inputs in an object
 //      step1:  Store the form element in a variable. Get it using jQuery
   let formVisitor = $('#visitorForm');
-  let nameVisitor = $('#nameInput').val();
-  let addressVisitor = $('#addressInput').val();
-  let contactNumVisitor = $('#contactNumberInput').val();
-  let emailVisitor = $('#emailInput').val();
-  let covidStatusVisitor = $('#covidStatusInput').val();
-  let vaccineTypeVisitor = $('#vaccineInput').val();
 
 //      step2:  Setup the submit event of the form. Then add the function parameter
 //      step3:  Add the event.preventDefault() line in the function.
   formVisitor.submit(function(event){
+    
     event.preventDefault();
+
+    let nameVisitor = $('input#nameInput').val();
+    let addressVisitor = $('#addressInput').val();
+    let contactNumVisitor = $('#contactNumberInput').val();
+    let emailVisitor = $('#emailInput').val();
+    let covidStatusVisitor = $('#covidStatusInput').val();
+    let vaccineTypeVisitor = $('#vaccineInput').val();
+
     alert('Visitor Form Submitted!');
 
     //      step4:  Get all the data from the input elements and create an object from them
@@ -29,15 +32,16 @@
     //                  .......(etc).
     //              }
     //              then store it in a variable. That would be used by @micaela.
-
+    console.log(nameVisitor);
     let visitorCredentials = {
       name: nameVisitor,
       address: addressVisitor,
       contact: contactNumVisitor,
       email: emailVisitor,
       covidStatus: covidStatusVisitor,
-      vaccineTpe: vaccineTypeVisitor
+      vaccineType: vaccineTypeVisitor
     };
+    console.log(visitorCredentials)
   
     //      @micaela:add --> setup the emitter for writing the data to the database
     //                          and pass the object made by @clar as a parameter to the event.

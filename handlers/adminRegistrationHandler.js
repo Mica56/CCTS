@@ -6,14 +6,15 @@ const VisitModel = require('../models/visitModel.js');
 const AdminModel = require('../models/adminModel.js')
 
 
-exports.registerAdmin = async function (event,entity) {
+exports.registerAdmin = async function (event,entity, win) {
+    console.log(entity);
 	const Admin = new AdminModel({
-	name: entity.name,
-    address: entity.address,
-    contactNumber: entity.contactNumber,
-    email: entity.email,
-    username: entity.username,
-    password: entity.password
+        name: entity.name,
+        address: entity.address,
+        contactNumber: entity.contactNumber,
+        email: entity.email,
+        username: entity.username,
+        password: entity.password
     });
     
     Admin.save(function (err) {
@@ -21,4 +22,6 @@ exports.registerAdmin = async function (event,entity) {
  		console.log("Saved Admin");
  		 // saved!
 	});
+
+    win.loadURL(`file://${__dirname}/../views/registration.ejs`);
 }

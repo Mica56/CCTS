@@ -5,14 +5,15 @@ const VisitorModel = require('../models/visitorModel.js');
 const VisitModel = require('../models/visitModel.js');
 
 
-exports.registerVisitor = async function (event, inputs) {
+exports.registerVisitor = async function (event, entity, win) {
+    console.log(entity);
 	const Visitor = new VisitorModel({
 	name: entity.name,
     address: entity.address,
-    contactNumber: entity.contactNumber,
+    contactNumber: entity.contact,
     email: entity.email,
     covidStatus: entity.covidStatus,
-    vaccine: entity.vaccine,
+    vaccine: entity.vaccineType,
     });
     
     Visitor.save(function (err) {
@@ -20,6 +21,8 @@ exports.registerVisitor = async function (event, inputs) {
  		console.log("Saved Visitor");
  		 // saved!
 	});
+
+    win.loadURL(`file://${__dirname}/../views/registration.ejs`);
     /*  
         *   @das:add -->    Write the contents of the 'inputs' to the database
         *   Note: use the visitorModel

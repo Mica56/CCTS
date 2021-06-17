@@ -17,6 +17,11 @@ const establishmentDataPageHandler = require('./handlers/establishmentDataPageHa
 const visitDataPageHandler = require('./handlers/visitDataPageHandler.js');
 const visitorDataPageHandler = require('./handlers/visitorDataPageHandler.js');
 
+// import the registration handlers
+
+const adminRegistrationHandler = require('./handlers/adminRegistrationHandler.js');
+const establishmentRegistrationHandler = require('./handlers/establishmentRegistrationHandler.js');
+const visitorRegistrationHandler = require('./handlers/visitorRegistrationHandler.js');
 // setup mongodb database connection
 const mongoose = require('mongoose');
 const visitorModel = require('./models/visitorModel.js');
@@ -44,7 +49,7 @@ db.once('open', async function () {
 let win = null;// for reference to the window
 let winChild = null; // for reference to the child window
 let winData = null;
-
+exports.win = win;
 // declare variables to hold the database data
 let visitors,  visits, establishments;
 /*
@@ -226,8 +231,8 @@ ipcMain.on('reqAdminReg', (event, msg)=>{
 */
 
 // for the request of writing the visitor data into the database
-ipcMain.on('writeVisitorData', (event, objData)=>{
-    console.log(objData);
+ipcMain.on('writeVisitorData', function (event, entity) {
+    visitorRegistrationHandler.registerVisitor(event, entity, win);
 });
 
 /*
@@ -236,8 +241,8 @@ ipcMain.on('writeVisitorData', (event, objData)=>{
 */
 
 // for the request of writing the establishment data into the database
-ipcMain.on('writeEstabData', (event, objData)=>{
-    console.log(objData);
+ipcMain.on('writeEstabData', function (event, entity) {
+    establishmentRegistrationHandler.registerEstablishment(event, entity, win);
 });
 
 /*
@@ -246,6 +251,6 @@ ipcMain.on('writeEstabData', (event, objData)=>{
 */
 
 // for the request of writing the admin data into the database
-ipcMain.on('writeAdminData', (event, objData)=>{
-    console.log(objData);
+ipcMain.on('writeAdminData', function (event, entity) {
+    adminRegistrationHandler.registerAdmin(event, entity, win);
 });
