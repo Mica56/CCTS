@@ -28,5 +28,5 @@ establishmentRegiBtn.click(function(event){
 adminRegiBtn.click(function(event){
     event.preventDefault();
     alert('Admin Registration Button');
-    ipcRenderer.send('reqAgminReg', 'access to Admin Registration page successful.');
+    ipcRenderer.send('reqAdminReg', 'access to Admin Registration page successful.');
 });

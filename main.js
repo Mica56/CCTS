@@ -214,7 +214,7 @@ ipcMain.on('reqEstabReg', (event, msg)=>{
     win.loadURL(`file://${__dirname}/views/establishmentRegistration.ejs`)
 });
 // for directing to the admin registration page
-ipcMain.on('reqAgminReg', (event, msg)=>{
+ipcMain.on('reqAdminReg', (event, msg)=>{
     console.log(msg);
     win.loadURL(`file://${__dirname}/views/adminRegistration.ejs`)
 });
@@ -225,21 +225,27 @@ ipcMain.on('reqAgminReg', (event, msg)=>{
     Below are the handlers for the visitor registration page
 */
 
-// @micaela:add --> add the handler for the request of writing the visitor data into the database
-
+// for the request of writing the visitor data into the database
+ipcMain.on('writeVisitorData', (event, objData)=>{
+    console.log(objData);
+});
 
 /*
     #establishmentRegistration (establishmentRegistrationRenderer.js)
     Below are the handlers for the establishment registration page
 */
 
-// @micaela:add --> add the handler for the request of writing the establishment data into the database
-
+// for the request of writing the establishment data into the database
+ipcMain.on('writeEstabData', (event, objData)=>{
+    console.log(objData);
+});
 
 /*
     #adminRegistration (adminRegistrationRenderer.js)
     Below are the handlers for the admin registration page
 */
 
-// @micaela:add --> add the handler for the request of writing the admin data into the database
-
+// for the request of writing the admin data into the database
+ipcMain.on('writeAdminData', (event, objData)=>{
+    console.log(objData);
+});
