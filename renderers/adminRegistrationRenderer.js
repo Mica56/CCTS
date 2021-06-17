@@ -20,26 +20,31 @@
   formAdmin.submit(function(event){
     event.preventDefault();
     alert('Admin Form Submitted!');
+
+    //      step4:  Get all the data from the input elements and create an object from them
+    //              It would be something like the statements below:
+    //              {
+    //                  name: $('input#nameInput').val(),
+    //                  email: $('input#emailInput').val(),
+    //                  .......(etc).
+    //              }
+    //              then store it in a variable. That would be used by @micaela.
+    let adminCredentials = {
+      name: nameAdmin,
+      address: addressAdmin,
+      contact: contactNumAdmin,
+      email: emailAdmin,
+      username: userNameAdmin,
+      password: passwordAdmin
+    };
+    //      @micaela:add --> setup the emitter for writing the data to the database
+    //                          and pass the object made by @clar as a parameter to the event.
+    
   });
 
-//      step4:  Get all the data from the input elements and create an object from them
-//              It would be something like the statements below:
-//              {
-//                  name: $('input#nameInput').val(),
-//                  email: $('input#emailInput').val(),
-//                  .......(etc).
-//              }
-//              then store it in a variable. That would be used by @micaela.
-  let adminCredentials = {
-    name: nameAdmin,
-    address: addressAdmin,
-    contact: contactNumAdmin,
-    email: emailAdmin,
-    username: userNameAdmin,
-    password: passwordAdmin
-  };
 
-//      @micaela:add --> setup the emitter for writing the data to the database
-//                          and pass the object made by @clar as a parameter to the event.
+  
+
+
 
 

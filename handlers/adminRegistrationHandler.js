@@ -13,7 +13,9 @@ exports.registerAdmin = async function (event,entity) {
     contactNumber: entity.contactNumber,
     email: entity.email,
     username: entity.username,
-    password: entity.password,
+    password: entity.password
+    });
+    
     Admin.save(function (err) {
   		if (err) console.log(err);
  		console.log("Saved Admin");

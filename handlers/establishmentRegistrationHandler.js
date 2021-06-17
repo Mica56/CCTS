@@ -10,7 +10,9 @@ exports.registerEstablishment = async function (event, inputs) {
     address: entity.address,
     owner: entity.owner,
     contactNumber: entity.contactNumber,
-    email: entity.email,
+    email: entity.email
+    });
+    
     Establishment.save(function (err) {
   		if (err) console.log(err);
  		console.log("Saved Establishment");

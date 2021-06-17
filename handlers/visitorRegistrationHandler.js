@@ -13,6 +13,8 @@ exports.registerVisitor = async function (event, inputs) {
     email: entity.email,
     covidStatus: entity.covidStatus,
     vaccine: entity.vaccine,
+    });
+    
     Visitor.save(function (err) {
   		if (err) console.log(err);
  		console.log("Saved Visitor");
