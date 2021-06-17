@@ -42,6 +42,7 @@
     };
     //      @micaela:add --> setup the emitter for writing the data to the database
     //                          and pass the object made by @clar as a parameter to the event.
+    ipcRenderer.send('writeEstabData', establishmentCredentials);
   });
 
   
