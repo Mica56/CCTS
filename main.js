@@ -1,10 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path              = require('path');
 const fs                = require('fs');
-const QrScanner         = require('qr-scanner');
 const ejse              = require('ejs-electron');
 const os                = require('os')
-QrScanner.WORKER_PATH   = path.normalize(__dirname + '/node_modules/qr-scanner/qr-scanner-worker.min.js');
 
 const EstablishmentModel = require('./models/establishmentModel.js');
 const VisitorModel = require('./models/visitorModel.js');
@@ -212,6 +210,7 @@ ipcMain.handle('treePage:getData', treePageHandler.buildTree);
 ipcMain.on('reqVisitorReg', (event, msg)=>{
     console.log(msg);
     win.loadURL(`file://${__dirname}/views/visitorRegistration.ejs`);
+    console.log('hey?');
 });
 // for directing to the establishment registration page
 ipcMain.on('reqEstabReg', (event, msg)=>{
