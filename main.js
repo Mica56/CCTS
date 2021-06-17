@@ -119,14 +119,18 @@ ipcMain.on('test', (event, msg)=>{
 //for directing to establishment page
 ipcMain.on('reqEstablishment', (event, msg)=>{
     console.log(msg);
+    win.loadURL(`file://${__dirname}/views/establishment.ejs`);
+
 });
 //for directing to visitor page
 ipcMain.on('reqVisitor', (event, msg)=>{
     console.log(msg);
+    win.loadURL(`file://${__dirname}/views/visitor.ejs`);
 });
 //for directing to visit data page
 ipcMain.on('reqVisit', (event, msg)=>{
     console.log(msg);
+    win.loadURL(`file://${__dirname}/views/visit.ejs`);
 });
 
 

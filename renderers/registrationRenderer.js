@@ -10,7 +10,7 @@
 // @clar:add --> use the variable you made above and set up their click event for the "to visitor registration page" button/link
     // @micaela:add --> emit an event for directing the page to the visitor registration page
 
-    
+
 
 // @clar:add --> use the variable you made above and set up their click event for the "to establishment registration page" button/link
     // @micaela:add --> emit an event for directing the page to the establishment registration page
