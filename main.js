@@ -105,6 +105,7 @@ ipcMain.on('reqTree', (event, msg)=>{
 // for directing to register page
 ipcMain.on('reqRegister', (event, msg)=>{
     console.log(msg);
+    win.loadURL(`file://${__dirname}/views/registration.ejs`)
 });
 
 ipcMain.on('test',visitorDataPageHandler.getVisitors);
@@ -205,14 +206,17 @@ ipcMain.handle('treePage:getData', treePageHandler.buildTree);
 // for directing to the visitor registration page
 ipcMain.on('reqVisitorReg', (event, msg)=>{
     console.log(msg);
+    win.loadURL(`file://${__dirname}/views/visitorRegistration.ejs`);
 });
 // for directing to the establishment registration page
 ipcMain.on('reqEstabReg', (event, msg)=>{
     console.log(msg);
+    win.loadURL(`file://${__dirname}/views/establishmentRegistration.ejs`)
 });
 // for directing to the admin registration page
 ipcMain.on('reqAgminReg', (event, msg)=>{
     console.log(msg);
+    win.loadURL(`file://${__dirname}/views/adminRegistration.ejs`)
 });
 
 
