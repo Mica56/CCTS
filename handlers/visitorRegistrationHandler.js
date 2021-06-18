@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {dialog} = require('electron');
 
 const EstablishmentModel = require('../models/establishmentModel.js');
 const VisitorModel = require('../models/visitorModel.js');
@@ -17,9 +18,12 @@ exports.registerVisitor = async function (event, entity, win) {
     });
     
     Visitor.save(function (err) {
-  		if (err) console.log(err);
- 		console.log("Saved Visitor");
- 		 // saved!
+        if (err) {  
+            dialog.showMessageBoxSync(win, {message: "Visitor registeration failed! Please contact the developer."});
+        } else {
+            console.log("Saved Visitor!");
+ 		    dialog.showMessageBoxSync(win, {message: "Visitor registered successfully!"});
+        }
 	});
 
     win.loadURL(`file://${__dirname}/../views/registration.ejs`);

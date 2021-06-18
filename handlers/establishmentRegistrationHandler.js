@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const win = require('../main.js');
+
+const {dialog} = require('electron');
+
 const EstablishmentModel = require('../models/establishmentModel.js');
 const VisitorModel = require('../models/visitorModel.js');
 const VisitModel = require('../models/visitModel.js');
@@ -18,9 +20,12 @@ exports.registerEstablishment = async function (event, entity, win) {
     });
     
     Establishment.save(function (err) {
-  		if (err) console.log(err);
- 		console.log("Saved Establishment");
- 		 // saved!
+        if (err) {  
+            dialog.showMessageBoxSync(win, {message: "Establishment registeration failed! Please contact the developer."});
+        }else {
+            console.log("Saved Establishment!");
+ 		    dialog.showMessageBoxSync(win, {message: "Establishment registered successfully!"});
+        }
 	});
 
     win.loadURL(`file://${__dirname}/../views/registration.ejs`);

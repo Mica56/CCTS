@@ -19,6 +19,7 @@ let testBtn = $('a#testButton');
 // @clar:add --> setup the click event for the "to index page" button
 indexPageBtn.click(function(event){
   event.preventDefault();
+  console.log('index page');
   ipcRenderer.send('reqIndex', 'access to Index page successful.');
 });
 
@@ -26,6 +27,7 @@ indexPageBtn.click(function(event){
 // @clar:add --> setup the click event for the "to data page" button
 dataPageBtn.click(function(event){
   event.preventDefault();
+  console.log('data page');
   ipcRenderer.send('reqData', 'access to Data page successful.');
 });
   
@@ -33,6 +35,7 @@ dataPageBtn.click(function(event){
 // @clar:add --> get the link button for the tree page and setup the click event
 treePageBtn.click(function(event){
   event.preventDefault();
+  console.log('tree page');
   ipcRenderer.send('reqTree', 'access to Tree page successful.');
 });
 
@@ -40,7 +43,7 @@ treePageBtn.click(function(event){
 // @clar:add --> setup the click event for the "to scan page" button
 scanPageBtn.click(function(event){
   event.preventDefault();
-  alert('Scan Page');
+  console.log('scan page');
   ipcRenderer.send('reqScan', 'access to Scan page successful.');
 });
   
@@ -48,12 +51,13 @@ scanPageBtn.click(function(event){
 // @clar:add --> setup the click event for the "to register page" button
 regiPageBtn.click(function(event){
   event.preventDefault();
-  alert('Register Page');
+  console.log('register page');
   ipcRenderer.send('reqRegister', 'access to Register page successful.');
 });
 
 testBtn.click(function(event){
   event.preventDefault();
+  console.log('test');
   ipcRenderer.send('test', 'this is working.');
 });
 

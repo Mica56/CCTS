@@ -8,13 +8,11 @@
 //  @clar:add --> Setup the submition of the form and collect all the inputs in an object
 //      step1:  Store the form element in a variable. Get it using jQuery
   let formAdmin = $('#adminForm');
-  
 
 
   formAdmin.submit(function(event){
     //      step2:  Setup the submit event of the form. Then add the function parameter
     //      step3:  Add the event.preventDefault() line in the function.
-
     event.preventDefault();
     let nameAdmin = $('#nameInput').val();
     let addressAdmin = $('#addressInput').val();
@@ -41,7 +39,6 @@
     //      @micaela:add --> setup the emitter for writing the data to the database
     //                          and pass the object made by @clar as a parameter to the event.
     ipcRenderer.send('writeAdminData', adminCredentials);
-    alert('Admin Form Submitted!');
   });
 
 
