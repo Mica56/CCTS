@@ -30,5 +30,56 @@
                             __v: 0
                         }
                     ]
-
 */
+
+  $('visitor.ejs').ready(function(){
+    let addHeaders;
+    let addNewRow;
+    let data = [
+      {
+        _id: '60b655e296f43737186a8fa8',
+        name: 'Joseph Karl',
+        address: 'infanta, quezon',
+        contactNumber: '09991374692',
+        email: 'jk.email.com',
+        covidStatus: 'NONE',
+        vaccine: 'Pfizer',
+        dateRegistered: '2021-06-01T15:44:34.597Z',
+        __v: 0
+      },
+      {
+        _id: '60b655e296f43737186a8fa8',
+        name: 'Macey Villanueva',
+        address: 'antipolo, rizal',
+        contactNumber: '09123456789',
+        email: 'mv.email.com',
+        covidStatus: 'NONE',
+        vaccine: 'AstraZeneca',
+        dateRegistered: '2021-06-01T15:44:34.597Z',
+        __v: 0
+      },
+      {
+        _id: '60b655e296f43737186a8fa8',
+        name: 'RA Inocencio',
+        address: 'pasig, somwer',
+        contactNumber: '09099997893',
+        email: 'ra.email.com',
+        covidStatus: 'NONE',
+        vaccine: 'Pfizer',
+        dateRegistered: '2021-06-01T15:44:34.597Z',
+        __v: 0
+      }
+    ];
+    let keys = data.flatMap(Object.keys)
+
+    for(i=0;i<9;i++){
+      addHeaders = "<th>"+ keys[i] +"</th>";
+      $('#visitorTBL thead th:last-child').after(addHeaders);
+    }
+
+    for(i=1;i<=data.length;i++){
+      addNewRow = "<tr id='"+ data[i-1]._id +"'><td>"+ i +"</td><td>"+ data[i-1]._id +"</td><td>"+ data[i-1].name+"</td><td>"+ data[i-1].address+"</td><td>"+ data[i-1].contactNumber+"</td><td>"+ data[i-1].email+"</td><td>"+ data[i-1].covidStatus+"</td><td>"+ data[i-1].vaccine +"</td><td>"+ data[i-1].dateRegistered +"</td><td>"+ data[i-1].__v +"</td></tr>";
+      $('#visitorTBL > tbody:last-child').append(addNewRow);
+    }
+
+  });
