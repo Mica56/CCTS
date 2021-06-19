@@ -83,3 +83,11 @@
     }
 
   });
+
+
+
+  $('button#searchBtn').click( function () {
+    let id = $('input#searchInput').val();
+    alert(id);
+    $('tbody > tr').not(`#${id}`).hide();
+  })

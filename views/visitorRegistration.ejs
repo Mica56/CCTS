@@ -1,34 +1,44 @@
 <%- include('./header'); %> 
+    <link rel="stylesheet" href="../css/registrationForm.css">
 
-    <form id="visitorForm">
-        <div class="m-3">
-            <label for="nameInput" class="form-label">Name</label>
-            <input id="nameInput" class="form-control" type="text" placeholder="Your name" aria-label="default input example">
+    <main>
+        <div class="content-area">
+            <div class="title">Visitor</div>
+            <form action="">
+                <div class="establishment-details">
+                    <div class="input-box">
+                        <span class="details">Name</span>
+                        <input id="nameInput" type="text" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Address</span>
+                        <input id="addressInput" type="text" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Contact Number</span>
+                        <input id="contactNumberInput" type="text" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Email</span>
+                        <input id="emailInput" type="text" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Covid Status</span>
+                        <input id="covidStatusInput" type="text" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Vaccine</span>
+                        <input id="vaccineInput" type="text" required>
+                    </div>
+                </div>
+                
+                <div class="button">
+                    <input type="submit" value="Register">
+                </div>
+                
+            </form>
         </div>
-        <div class="m-3">
-            <label for="addressInput" class="form-label">Address</label>
-            <input id="addressInput" class="form-control" type="text" placeholder="Your Address" aria-label="default input example">
-        </div>
-        <div class="m-3">
-            <label for="contactNumberInput" class="form-label">Contact Number</label>
-            <input id="contactNumberInput" class="form-control" type="text" placeholder="Your Number" aria-label="default input example">
-        </div>
-        <div class="m-3">
-            <label for="emailInput" class="form-label">Email</label>
-            <input id="emailInput" class="form-control" type="text" placeholder="youremail@example.com" aria-label="default input example">
-        </div>
-        <div class="m-3">
-            <label for="covidStatusInput" class="form-label">Covid Status</label>
-            <input id="covidStatusInput" class="form-control" type="text" placeholder="Your covid status" aria-label="default input example">
-        </div>
-        <div class="m-3">
-            <label for="vaccineInput" class="form-label">Vaccine</label>
-            <input id="vaccineInput" class="form-control" type="text" placeholder="Your vaccine type" aria-label="default input example">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Sign in</button>
-        
-    </form>
+    </main>
     
     <script src="../renderers/require.js"></script>
     <script src="../renderers/visitorRegistrationRenderer.js"></script>

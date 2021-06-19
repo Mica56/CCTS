@@ -1,20 +1,27 @@
 <%- include('./header'); %> 
-
-  <!-- Start of main container -->
-  <div class="container">
-    <div id="videoContainer" class="card" >
-      <video id="video"></video>
+  <link rel="stylesheet" href="../css/scanner.css">
+  <main>
+    <div class="content-area">
+      <div class="scanner-area">
+        <video id="video" width="600">
+        </video>
+      </div>
+      <div class="buttons-area">
+        <div class="row">
+          <div class="col">
+            <a id="entryScanBtn" href="" class="btn1">Entrance</a>
+          </div>
+          <div class="col">
+            <a id="stopScanBtn" href="" class="btn2">Stop</a>
+          </div>
+          <div class="col">
+            <a id="exitScanBtn" href="" class="btn3">Exit</a>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- start of card body -->
-    <div class="card-body text-center">
-    <button id="entryScanBtn" class="btn btn-success">Entrance</button>
-    <button id="exitScanBtn" class="btn btn-warning">Exit</button>
-    <button id="stopScanBtn" class="btn btn-danger">stop</button>
-    </div>
-    <!-- end of card body -->
-
-
-  </div>
+  </main>
+  
 
   <!-- End of main container -->
   <script src="../renderers/require.js"></script>

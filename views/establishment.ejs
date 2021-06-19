@@ -1,20 +1,26 @@
 <%- include('./header'); %> 
+<%- include('./dataNavigation'); %> 
+  <link rel="stylesheet" href="../css/data.css">
+  <h2>Establishments Table</h2>
+  <div class="table-area">
+        <table id="establishmentTBL" class="data-tbl">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+               <!-- table headers will be inserted here -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- data will be inserted here -->
+          </tbody>
 
-  <h1>Establishment Data</h1>
-  <%- include('./dataNavigation'); %> 
-  <table class="table" id="establishmentTBL">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <!-- table headers will be inserted here -->
-        </tr>
-      </thead>
-      <tbody>
-        <!-- data will be inserted here -->
-      </tbody>
-  </table>
-
+        </table>
+    </div>
+  
+  </div>
+</main>
   <script src="../renderers/require.js"></script>
   <script src="../renderers/establishmentDataPage.js"></script>
   <script src="../renderers/dataNavigationRenderer.js"></script>
+  
 <%- include('./footer'); %> 

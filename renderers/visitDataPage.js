@@ -67,8 +67,22 @@
       }
 
       for(i=1;i<=data.length;i++){
-        addNewRow = "<tr id='"+ data[i-1]._id +"'><td>"+ i +"</td><td>"+ data[i-1]._id +"</td><td>"+ data[i-1].establishment+"</td><td>"+ data[i-1].visitor+"</td><td>"+ data[i-1].entered+"</td><td>"+ data[i-1].__v+"</td><td>"+ data[i-1].exited+"</td><tr>";
+        addNewRow = "<tr id='"+ data[i-1]._id +"'>" +
+                    "<td>"+ i +"</td><td>"+ data[i-1]._id +"</td>" +
+                    "<td>"+ data[i-1].establishment+"</td>" +
+                    "<td>"+ data[i-1].visitor+"</td>" +
+                    "<td>"+ data[i-1].entered+"</td>" +
+                    "<td>" + data[i-1].__v+"</td>" +
+                    "<td>"+ data[i-1].exited+"</td><tr>";
+                    
         $('#visitTBL > tbody:last-child').append(addNewRow);
       }
 
   });
+
+
+  $('button#searchBtn').click( function () {
+    let id = $('input#searchInput').val();
+    alert(id);
+    $('tbody > tr').not(`#${id}`).hide();
+  })

@@ -10,7 +10,7 @@ let visitTblBtn = $('a#visitTableButton');
 // @clar:add --> use the variable you made above and set up their click event for the "to establishment data page" button/link
 establishmentTblBtn.click(function(event){
     event.preventDefault();
-    alert('Establishment Table');
+    // alert('Establishment Table');
     ipcRenderer.send('reqEstablishment', 'access to Establishment page successful.');
 });
     
@@ -18,7 +18,7 @@ establishmentTblBtn.click(function(event){
 // @clar:add --> use the variable you made above and set up their click event for the "to visitor data page" button/link
 visitorTblBtn.click(function(event){
     event.preventDefault();
-    alert('Visitor Table');
+    // alert('Visitor Table');
     ipcRenderer.send('reqVisitor', 'access to Visitor page successful.');
 });
     
@@ -26,6 +26,6 @@ visitorTblBtn.click(function(event){
 // @clar:add --> use the variable you made above and set up their click event for the "to visit data page" button/link
 visitTblBtn.click(function(event){
     event.preventDefault();
-    alert('Visit Table');
+    // alert('Visit Table');
     ipcRenderer.send('reqVisit', 'access to Visit Data page successful.');
 });

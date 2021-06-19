@@ -29,7 +29,8 @@ const QrScannerEntry = new QrScanner(document.getElementById('video'), (result) 
     @modify:clar --> use jQuery for getting the element and adding eventhandlers
     * Start the scanner when the entrace button is clicked
 */
-entryScanBtn.click(function(){
+entryScanBtn.click(function(event){
+    event.preventDefault();
     console.log('scanning');
     if(!QrScannerEntry._active){
       QrScannerEntry.start();
@@ -54,7 +55,8 @@ QrScannerExit = new QrScanner(document.getElementById('video'), (result) => {
     @modify:clar --> use jQuery for getting the element and adding eventhandlers
     * Start the scanner when the exit button is clicked
 */
-exitScanBtn.click(function(){
+exitScanBtn.click(function(event){
+    event.preventDefault();
     console.log('scanning');
     if(!QrScannerExit._active){
       QrScannerExit.start();
@@ -65,7 +67,8 @@ exitScanBtn.click(function(){
     @done
     stop any QrScanner from running
 */
-stopScanBtn.click(() => {
+stopScanBtn.click((event) => {
+    event.preventDefault();
     console.log('stopped');
 
     if(QrScannerEntry._active){// stop the entry scanner if active
