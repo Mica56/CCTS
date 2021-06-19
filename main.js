@@ -20,6 +20,10 @@ const visitorDataPageHandler = require('./handlers/visitorDataPageHandler.js');
 const adminRegistrationHandler = require('./handlers/adminRegistrationHandler.js');
 const establishmentRegistrationHandler = require('./handlers/establishmentRegistrationHandler.js');
 const visitorRegistrationHandler = require('./handlers/visitorRegistrationHandler.js');
+
+// import the qr generator handler
+const qrGeneratorHandler = require('./handlers/QrGeneratorHandler.js');
+
 // setup mongodb database connection
 const mongoose = require('mongoose');
 const visitorModel = require('./models/visitorModel.js');
@@ -165,6 +169,14 @@ ipcMain.handle('reqVisitorData',visitorDataPageHandler.getVisitors);
 // handler for the request of visit data
 ipcMain.handle('reqVisitData', visitDataPageHandler.getVisits);
 
+
+/*
+    #visitDataPage (visitDataPage.js)
+    @unfinished
+    Below are the handlers for the printing  of QRCode
+*/
+
+ipcMain.on('reqPrintQr', qrGeneratorHandler.generateQr);
 
 /*
     #scannerPage (scannerPageRenderer.js)

@@ -57,19 +57,20 @@ $('establishment.ejs').ready(async function(event){
   let counter = 1;
   for (const obj of Object.values(dataArr)) { // add rows 
     let addNewRow;
-    console.log(obj._id);
-    let id = obj._id;
-    console.log
-    addNewRow = `<tr id=${obj._id}></tr>`
+    
+    let id = obj._id;// get the _id property of the object for use in tr element id
+    
+    addNewRow = `<tr id=${id}></tr>`// add new row for the current object
     $('#establishmentTBL > tbody').append(addNewRow);
 
-    addNewColumn = `<td>${counter++}</td>`
-    $(`#establishmentTBL tbody tr#${id}`).append(addNewColumn);
+    let addNumberColumn = `<td>${counter++}</td>`;// add new column for the number row
+    $(`#establishmentTBL tbody tr#${id}`).append(addNumberColumn);
 
+    
     // add the columns
-    for(const value of Object.values(obj)){
+    for(const value of Object.values(obj)){// add columns for the object attributes
       // console.log(obj[key]);
-      addNewColumn = `<td>${value}</td>`
+      let addNewColumn = `<td>${value}</td>`
       $(`#establishmentTBL tbody tr#${id}`).append(addNewColumn);
     }
   }

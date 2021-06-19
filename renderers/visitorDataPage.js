@@ -37,7 +37,7 @@
 
     let msg = "requesting visitor data..";
     let result = await ipcRenderer.invoke('reqVisitorData', msg);
-    console.log(result);
+    // console.log(result);
     let dataArr = JSON.parse(result);
     // add the headers for the table
     for(const key of Object.keys(dataArr[0])){
@@ -48,20 +48,26 @@
   
     let counter = 1;
     for (const obj of Object.values(dataArr)) { // add rows 
-      let addNewRow;
-      console.log(obj._id);
-      let id = obj._id;
-      console.log
-      addNewRow = `<tr id=${obj._id}></tr>`
+      // console.log(obj._id);
+
+      let id = obj._id; // get the id of the object (for element id and qrcode)
+      let name = obj.name;// get the name of the object (for the qrcode)
+
+      let addNewRow = `<tr id=${id}></tr>`// add new row for the current object
       $('#visitorTBL > tbody').append(addNewRow);
 
-      addNewColumn = `<td>${counter++}</td>`
-      $(`#visitorTBL tbody tr#${id}`).append(addNewColumn);
+      let addNumberColumn = `<td>${counter++}<a id=${'qr-'+ id} href='#'>Print QR</a></td>`
+      $(`#visitorTBL > tbody tr#${id}`).append(addNumberColumn);
+
+      $(`#qr-${id}`).click( function () { // set the click function for generating qr code
+        ipcRenderer.send('reqPrintQr', id, name);// emit an event for generating the qr code
+      }) ;
 
       // add the columns
       for(const value of Object.values(obj)){
         // console.log(obj[key]);
-        addNewColumn = `<td>${value}</td>`
+        console.log(value);
+        let addNewColumn = `<td>${value}</td>`
         $(`#visitorTBL tbody tr#${id}`).append(addNewColumn);
       }
     }

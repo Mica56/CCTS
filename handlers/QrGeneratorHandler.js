@@ -6,6 +6,7 @@ const fs = require('fs');// for file system operations
 const path = require('path');// for manipulating paths
 var QRCode = require('qrcode');// qrcode generator library
 
+const {dialog} = require('electron');
 
 /* 
     *   This function is generates the QR-Code given the id and the name
@@ -17,15 +18,16 @@ var QRCode = require('qrcode');// qrcode generator library
     *   }
 
 */
-exports.qrGenerator = function (event, id, name) {
-    qrPath = path.join(os.homedir(), 'Desktop', name + id + ".png");
+exports.generateQr = function (event, id, name) {
+    qrPath = path.join(os.homedir(), 'Desktop', `${name}-${id}` + ".png");
     QRCode.toFile(qrPath, id, {
         margin: 4,
         errorCorrectionLevel: 'high'
     },
         (err) => {
         if (err) console.log("An error has occured while generating QR-Code: ", err);
-        console.log('sucessful');
+        else
+            dialog.showMessageBox({message: "QR-Code generated Successfully!", type: "info", title: "QR-Code Generator"})
     });
 }
 
