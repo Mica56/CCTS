@@ -82,7 +82,15 @@
 
 
   $('button#searchBtn').click( function () {
-    let id = $('input#searchInput').val();
-    alert(id);
-    $('tbody > tr').not(`#${id}`).hide();
-  })
+    let input = $('input#searchInput').val();
+    
+    $(`tbody tr:not(:contains('${input}'))`).hide();
+    $(`tbody tr:contains('${input}')`).show();
+  });
+
+  $('#searchInput').keyup( function () {
+    let input = $('input#searchInput').val();
+    
+    $(`tbody tr:not(:contains('${input}'))`).hide();
+    $(`tbody tr:contains('${input}')`).show();
+  });
