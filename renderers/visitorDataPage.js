@@ -64,10 +64,22 @@
       }) ;
 
       // add the columns
-      for(const value of Object.values(obj)){
+      for(const [key, value] of Object.entries(obj)){
         // console.log(obj[key]);
-        console.log(value);
-        let addNewColumn = `<td>${value}</td>`
+        let addNewColumn;
+        if (value) {// if not null
+          if(key == 'dateRegistered'){// if date
+            let date = new Date(value);
+            let formattedDate = `${date.toDateString()} - ${date.toLocaleTimeString()}`;
+            addNewColumn = `<td>${formattedDate}</td>`;
+          } else {// common case
+            addNewColumn = `<td>${value}</td>`;
+          }
+        } else {// if property has null value
+          addNewColumn = `<td>None</td>`;
+        }
+        
+        
         $(`#visitorTBL tbody tr#${id}`).append(addNewColumn);
       }
     }

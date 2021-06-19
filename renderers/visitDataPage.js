@@ -50,13 +50,26 @@
       addNewRow = `<tr id=${obj._id}></tr>`
       $('#visitTBL > tbody').append(addNewRow);
 
-      addNewColumn = `<td>${counter++}</td>`
-      $(`#visitTBL tbody tr#${id}`).append(addNewColumn);
+      let addNumberColumn = `<td>${counter++}</td>`
+      $(`#visitTBL tbody tr#${id}`).append(addNumberColumn);
 
       // add the columns
-      for(const value of Object.values(obj)){
-        // console.log(obj[key]);
-        addNewColumn = `<td>${value}</td>`
+      for(const [key, value] of Object.entries(obj)){
+        let addNewColumn;
+        if(value){
+          if(key == 'establishment' || key == 'visitor'){
+            addNewColumn = `<td>${value.name}</td>`;
+          } else if (key == 'entered' || key == 'exited') {
+            let date = new Date(value);
+            let formattedDate = `${date.toDateString()} - ${date.toLocaleTimeString()}`;
+            addNewColumn = `<td>${formattedDate}</td>`;
+          } else {
+            addNewColumn = `<td>${value}</td>`;
+          }
+        }else {
+          addNewColumn = `<td>None</td>`;
+        }
+
         $(`#visitTBL tbody tr#${id}`).append(addNewColumn);
       }
     }

@@ -68,9 +68,21 @@ $('establishment.ejs').ready(async function(event){
 
     
     // add the columns
-    for(const value of Object.values(obj)){// add columns for the object attributes
+    for(const [key, value] of Object.entries(obj)){// add columns for the object attributes
       // console.log(obj[key]);
-      let addNewColumn = `<td>${value}</td>`
+      let addNewColumn;
+      if (value){// if the property is not null
+        if(key == 'dateRegistered'){// if date, format
+          let date = new Date(value);
+          let formattedDate = `${date.toDateString()} - ${date.toLocaleTimeString()}`;
+          addNewColumn = `<td>${formattedDate}</td>`
+        } else { // common case
+          addNewColumn = `<td>${value}</td>`
+        }
+      } else { // display none
+        addNewColumn = `<td>None</td>`
+      }
+      
       $(`#establishmentTBL tbody tr#${id}`).append(addNewColumn);
     }
   }

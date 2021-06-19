@@ -61,6 +61,7 @@ function createWindow (file) {
     window = new BrowserWindow({
       width: 800,
       height: 600,
+      show: false,
       webPreferences: {
         preload: path.join(__dirname, 'preload.js'),
         contextIsolation: false,
@@ -76,6 +77,10 @@ function createWindow (file) {
 
 app.whenReady().then(() => {
     win = createWindow('/index.ejs');
+    
+    win.once('ready-to-show', () => {
+        win.show()
+    });
 
     app.on('activate', function () {
         if (BrowserWindow.getAllWindows().length === 0) createWindow('/index.ejs');
@@ -134,6 +139,7 @@ ipcMain.on('reqEstablishment', (event, msg)=>{
 ipcMain.on('reqVisitor', (event, msg)=>{
     console.log(msg);
     win.loadURL(`file://${__dirname}/views/visitor.ejs`);
+    
 });
 //for directing to visit data page
 ipcMain.on('reqVisit', (event, msg)=>{

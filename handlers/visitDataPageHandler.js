@@ -7,7 +7,11 @@ const VisitModel = require('../models/visitModel.js');
 
 
 exports.getVisits = async function() {
-	var visits = await VisitModel.find({}).exec();
+	var visits = await VisitModel.find({}, 'establishment visitor entered exited')
+    .populate({path: 'establishment', select: 'name'})
+    .populate({path: 'visitor', select: 'name'}).exec();
+
+    // console.log(visits);
 	return JSON.stringify(visits);
 
     /*  

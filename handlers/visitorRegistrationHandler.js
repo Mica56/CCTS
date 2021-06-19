@@ -7,14 +7,14 @@ const VisitModel = require('../models/visitModel.js');
 
 
 exports.registerVisitor = async function (event, entity, win) {
-    console.log(entity);
+    // console.log(entity);
 	const Visitor = new VisitorModel({
-	name: entity.name,
-    address: entity.address,
-    contactNumber: entity.contact,
-    email: entity.email,
-    covidStatus: entity.covidStatus,
-    vaccine: entity.vaccineType,
+        name: entity.name,
+        address: entity.address,
+        contactNumber: entity.contact,
+        email: entity.email,
+        covidStatus: entity.covidStatus,
+        vaccine: entity.vaccineType,
     });
     
     Visitor.save(function (err) {
