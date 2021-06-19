@@ -31,7 +31,11 @@
 
 */
 
-  $('establishment.ejs').ready(function(event){
+  $('establishment.ejs').ready(async function(event){
+    let msg = "requesting estabishment data..";
+    let result = await ipcRenderer.invoke('reqEstabData', msg);
+    console.log(result);
+
     let addHeaders;
     let addNewRow;
     let data = [

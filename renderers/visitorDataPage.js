@@ -32,7 +32,11 @@
                     ]
 */
 
-  $('visitor.ejs').ready(function(){
+  $('visitor.ejs').ready(async function(){
+    let msg = "requesting visitor data..";
+    let result = await ipcRenderer.invoke('reqVisitorData', msg);
+    console.log(result);
+
     let addHeaders;
     let addNewRow;
     let data = [
