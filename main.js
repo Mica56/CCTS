@@ -144,8 +144,11 @@ ipcMain.on('reqVisit', (event, msg)=>{
     Below are the handlers for the establishment data page
 */
 
-// @micaela:add --> add the handler for request of establishment data
-
+// handler for request of establishment data
+ipcMain.handle('reqEstabData', async (event, msg) => {
+    console.log(msg);
+    return "Some Data..";
+  });
 
 /*
     #visitorDataPage (visitorDataPage.js)
@@ -153,8 +156,11 @@ ipcMain.on('reqVisit', (event, msg)=>{
     Below are the handlers for the visitor data page
 */
 
-// @micaela:add --> add the handler for the request of visitor data
-
+// handler for the request of visitor data
+ipcMain.handle('reqVisitorData', async (event, msg) => {
+    console.log(msg);
+    return "Some Data..";
+  });
 
 /*
     #visitDataPage (visitDataPage.js)
@@ -162,8 +168,11 @@ ipcMain.on('reqVisit', (event, msg)=>{
     Below are the handlers for the visit data apge
 */
 
-// @micaela:add --> add the handler for the request of visit data
-
+// handler for the request of visit data
+ipcMain.handle('reqVisitData', async (event, msg) => {
+    console.log(msg);
+    return "Some Data..";
+  });
 
 
 /*
