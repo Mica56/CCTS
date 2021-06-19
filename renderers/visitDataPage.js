@@ -33,54 +33,33 @@
   $('visit.ejs').ready(async function(event){
     let msg = "requesting visit data..";
     let result = await ipcRenderer.invoke('reqVisitData', msg);
-    console.log(result);
 
-    let addHeaders;
-    let addNewRow;
-    let data = [
-      {
-      _id: '60b66aa4b13db43de4d86e20',
-      establishment: '60b64d198873311ec41b43f3',
-      visitor: '60b655e296f43737186a8fa8',
-      entered: '2021-06-01T17:13:08.640Z',
-      __v: 0,
-      exited: '2021-06-01T17:31:08.962Z'
-      },
-      {
-      _id: 'test1',
-      establishment: 'estab 1',
-      visitor: 'visitor 1',
-      entered: '2021-06-01T17:13:08.640Z',
-      __v: 0,
-      exited: '2021-06-01T17:31:08.962Z'
-      },
-      {
-      _id: '60b66aa4b13db43de4d86e20',
-      establishment: 'estab 2',
-      visitor: 'vistor 2',
-      entered: '2021-06-01T17:13:08.640Z',
-      __v: 0,
-      exited: '2021-06-01T17:31:08.962Z'
-      }
-    ];
-      let keys = data.flatMap(Object.keys)
+    
+    let dataArr = JSON.parse(result);
+    // add the headers for the table
+    for(const key of Object.keys(dataArr[0])){
+      let addHeaders = `<th>${key}</th>`;
+      $('#visitTBL thead th:last-child').after(addHeaders);
+    }
 
-      for(i=0;i<6;i++){
-        addHeaders = "<th>"+ keys[i] +"</th>";
-        $('#visitTBL thead th:last-child').after(addHeaders);
-      }
+  
+    let counter = 1;
+    for (const obj of Object.values(dataArr)) { // add rows 
+      let addNewRow;
+      let id = obj._id;
+      addNewRow = `<tr id=${obj._id}></tr>`
+      $('#visitTBL > tbody').append(addNewRow);
 
-      for(i=1;i<=data.length;i++){
-        addNewRow = "<tr id='"+ data[i-1]._id +"'>" +
-                    "<td>"+ i +"</td><td>"+ data[i-1]._id +"</td>" +
-                    "<td>"+ data[i-1].establishment+"</td>" +
-                    "<td>"+ data[i-1].visitor+"</td>" +
-                    "<td>"+ data[i-1].entered+"</td>" +
-                    "<td>" + data[i-1].__v+"</td>" +
-                    "<td>"+ data[i-1].exited+"</td><tr>";
-                    
-        $('#visitTBL > tbody:last-child').append(addNewRow);
+      addNewColumn = `<td>${counter++}</td>`
+      $(`#visitTBL tbody tr#${id}`).append(addNewColumn);
+
+      // add the columns
+      for(const value of Object.values(obj)){
+        // console.log(obj[key]);
+        addNewColumn = `<td>${value}</td>`
+        $(`#visitTBL tbody tr#${id}`).append(addNewColumn);
       }
+    }
 
   });
 

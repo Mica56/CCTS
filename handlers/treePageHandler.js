@@ -8,6 +8,8 @@ exports.buildTree = async function (event, id) {
     
     console.log(id);
     let result = await VisitorModel.findById(mongoose.Types.ObjectId(id)).exec();
+    console.log(result);
+
     let res = result.toObject();
     res.children = [];
     let v = {

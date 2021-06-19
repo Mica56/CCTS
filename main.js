@@ -145,10 +145,7 @@ ipcMain.on('reqVisit', (event, msg)=>{
 */
 
 // handler for request of establishment data
-ipcMain.handle('reqEstabData', async (event, msg) => {
-    console.log(msg);
-    return "Some Data..";
-  });
+ipcMain.handle('reqEstabData', establishmentDataPageHandler.getEstablishments);
 
 /*
     #visitorDataPage (visitorDataPage.js)
@@ -157,10 +154,7 @@ ipcMain.handle('reqEstabData', async (event, msg) => {
 */
 
 // handler for the request of visitor data
-ipcMain.handle('reqVisitorData', async (event, msg) => {
-    console.log(msg);
-    return "Some Data..";
-  });
+ipcMain.handle('reqVisitorData',visitorDataPageHandler.getVisitors);
 
 /*
     #visitDataPage (visitDataPage.js)
@@ -169,10 +163,7 @@ ipcMain.handle('reqVisitorData', async (event, msg) => {
 */
 
 // handler for the request of visit data
-ipcMain.handle('reqVisitData', async (event, msg) => {
-    console.log(msg);
-    return "Some Data..";
-  });
+ipcMain.handle('reqVisitData', visitDataPageHandler.getVisits);
 
 
 /*
