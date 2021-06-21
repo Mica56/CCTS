@@ -209,7 +209,22 @@ ipcMain.on('exit:detected', scannerPageHandler.exit);
     #treePage (treePageRenderer.js)
     Below are the handlers for the tree page
 */
-ipcMain.handle('treePage:getData', treePageHandler.buildTree);
+ipcMain.handle('treePage:getData', function (event, obj, degree) {
+    return treePageHandler.buildTree(obj, degree);
+});
+
+ipcMain.on('invalidDegreeInput', function (event, degree) {
+    treePageHandler.showDegreeError(win, degree);
+})
+
+ipcMain.on('createTreeFromVisit', function (event, obj) {
+    win.loadURL(`file://${__dirname}/views/tree.ejs`);
+
+    win.webContents.once('did-finish-load', () => {// .on causes the renderer to execute the event 'did-finish-load' twice
+        console.log('this should only happen once');
+        win.webContents.send('createTree', obj);
+    });
+});
 
 
 /*

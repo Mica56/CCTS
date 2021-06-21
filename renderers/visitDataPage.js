@@ -2,6 +2,7 @@
   This file contains all the javascript codes for the visit data page
 */
 
+
 /*
     *   @clar:add --> display all the visit data to the table
     *       Tasks:
@@ -52,6 +53,10 @@
 
       let addNumberColumn = `<td>${counter++}</td>`
       $(`#visitTBL tbody tr#${id}`).append(addNumberColumn);
+
+      $(`#${id}`).click( function (event) {// set up the click function for the row
+        ipcRenderer.send('createTreeFromVisit', obj);
+      });
 
       // add the columns
       for(const [key, value] of Object.entries(obj)){

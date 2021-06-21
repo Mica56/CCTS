@@ -1,7 +1,17 @@
 <%- include('./header'); %> 
     <link rel="stylesheet" href="../css/tree.css">
     <link rel="stylesheet" href="../node_modules/orgchart/src/css/jquery.orgchart.css">
+
+    
+
     <main class="content-area">
+      <div class="row-1">
+        <form id='degreeInputForm'>
+          <label for="degreeInput">Degree</label>
+          <input type="text" name="search" id="degreeInput" placeholder="Search...">
+              <button id="searchBtn" href="#">Search</button>
+        </form>
+      </div>
       <h1>Contact Trace Tree</h1>
       <div id="chart-container"></div>
     </main>

@@ -14,6 +14,7 @@ exports.entrance = async (event, id) => {
         console.log('visitor matched!');
     
         establishment = await EstablishmentModel.findById({_id: mongoose.Types.ObjectId("60b64d198873311ec41b43f3")}).exec();
+        console.log(establishment);
         console.log('establishment matched!');
     
         // get the visitor instance
@@ -38,14 +39,11 @@ exports.entrance = async (event, id) => {
 exports.exit = async (event, id) => {
     console.log('exit:detected');
     let visitor, establishment;
-
+    // get the id of the visitor
     visitor = await VisitorModel.findById({_id: mongoose.Types.ObjectId(id) }).exec();
     console.log('visitor matched!');
 
-    establishment = await EstablishmentModel.findById({_id: mongoose.Types.ObjectId(id) }).exec();
-    console.log('establishment matched!');
-
-    visit = await VisitModel.findOneAndUpdate({visitor: visitor, establishment: establishment}).sort({entered: -1}).exec()
+    visit = await VisitModel.findOne({visitor: visitor}).sort({entered: -1}).exec()
     visit.exited = Date.now();
     visit.save((err, result) => {
         if(err) console.error('Error saving record', err);// saving error
