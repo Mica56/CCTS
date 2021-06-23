@@ -1,30 +1,39 @@
-<%- include('./header'); %> 
-  <link rel="stylesheet" href="../css/scanner.css">
-  <main>
-    <div class="content-area">
-      <div class="scanner-area">
-        <video id="video" width="600">
-        </video>
-      </div>
-      <div class="buttons-area">
-        <div class="row">
-          <div class="col">
-            <a id="entryScanBtn" href="" class="btn1">Entrance</a>
-          </div>
-          <div class="col">
-            <a id="stopScanBtn" href="" class="btn2">Stop</a>
-          </div>
-          <div class="col">
-            <a id="exitScanBtn" href="" class="btn3">Exit</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
+<!DOCTYPE html>
+    <html lang=en>
+      <%- include('./headOpening'); %>
+        <link rel="stylesheet" href="../css/scanner.css">
+      <%- include('./headClosing'); %>
+      
+      
+      <body>
+        <%- include('./navigation'); %> 
   
+        <main>
+          <div class="content-area">
+            <div class="scanner-area">
+              <video id="video" width="600">
+              </video>
+            </div>
+            <div class="buttons-area">
+              <div class="row">
+                <div class="col">
+                  <a id="entryScanBtn" href="" class="btn1">Entrance</a>
+                </div>
+                <div class="col">
+                  <a id="stopScanBtn" href="" class="btn2">Stop</a>
+                </div>
+                <div class="col">
+                  <a id="exitScanBtn" href="" class="btn3">Exit</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        
+        <script src="../renderers/require.js"></script>
+        <script src="../renderers/scannerPageRenderer.js"></script>
+
+        <%- include('./footer'); %> 
 
   <!-- End of main container -->
-  <script src="../renderers/require.js"></script>
-  <script src="../renderers/scannerPageRenderer.js"></script>
-
-<%- include('./footer'); %> 
+  

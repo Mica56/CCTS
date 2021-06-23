@@ -1,51 +1,59 @@
-<%- include('./header'); %>
-    <link rel="stylesheet" href="../css/registrationForm.css">
-    <main>
-        <div class="content-area">
-            <div class="title">Establishment</div>
-            <form id="establishmentForm">
-                <div class="establishment-details">
-                    <div class="input-box">
-                        <span class="details">Name</span>
-                        <input id="nameInput" type="text" required>
-                    </div>
-                    <div class="input-box">
-                        <span class="details">Address</span>
-                        <input id="addressInput" type="text" required>
-                    </div>
-                    <div class="input-box">
-                        <span class="details">Owner</span>
-                        <input id="ownerInput" type="text" required>
-                    </div>
-                    <div class="input-box">
-                        <span class="details">Contact Number</span>
-                        <input id="contactNumberInput" type="text" required>
-                    </div>
-                    <div class="input-box">
-                        <span class="details">Email</span>
-                        <input id="emailInput" type="text" required>
-                    </div>
-
-                    <div class="input-box">
-                        <span class="details">Username</span>
-                        <input id="usernameInput" type="text" required>
-                    </div>
-
-                    <div class="input-box">
-                        <span class="details">Password</span>
-                        <input id="passwordInput" type="text" required>
-                    </div>
-                </div>
-                
-                <div class="button">
-                    <input type="submit" value="Register">
-                </div>
-                
-            </form>
-        </div>
-    </main>
+<!DOCTYPE html>
+    <html lang=en>
+        <%- include('./headOpening'); %>
+            <link rel="stylesheet" href="../css/registrationForm.css">
+        <%- include('./headClosing'); %>
     
-    <script src="../renderers/require.js"></script>
-    <script src="../renderers/establishmentRegistrationRenderer.js"></script>
+        <body>
+            <%- include('./navigation'); %> 
+            <main>
+                <div class="content-area">
+                    <div class="title">Establishment</div>
+                    <form id="establishmentForm">
+                        <div class="establishment-details">
+                            <div class="input-box">
+                                <span class="details">Name</span>
+                                <input id="nameInput" type="text" required>
+                            </div>
+                            <div class="input-box">
+                                <span class="details">Address</span>
+                                <input id="addressInput" type="text" required>
+                            </div>
+                            <div class="input-box">
+                                <span class="details">Owner</span>
+                                <input id="ownerInput" type="text" required>
+                            </div>
+                            <div class="input-box">
+                                <span class="details">Contact Number</span>
+                                <input id="contactNumberInput" type="text" required>
+                            </div>
+                            <div class="input-box">
+                                <span class="details">Email</span>
+                                <input id="emailInput" type="text" required>
+                            </div>
 
-<%- include('./footer'); %> 
+                            <div class="input-box">
+                                <span class="details">Username</span>
+                                <input id="usernameInput" type="text" required>
+                            </div>
+
+                            <div class="input-box">
+                                <span class="details">Password</span>
+                                <input id="passwordInput" type="text" required>
+                            </div>
+                        </div>
+                        
+                        <div class="button">
+                            <input type="submit" value="Register">
+                        </div>
+                        
+                    </form>
+                </div>
+            </main>
+            
+            <script src="../renderers/require.js"></script>
+            <script src="../renderers/establishmentRegistrationRenderer.js"></script>
+            <%- include('./footer'); %> 
+        </body>
+    </html>
+

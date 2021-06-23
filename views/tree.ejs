@@ -1,28 +1,35 @@
-<%- include('./header'); %> 
-    <link rel="stylesheet" href="../css/tree.css">
-    <link rel="stylesheet" href="../node_modules/orgchart/src/css/jquery.orgchart.css">
+<!DOCTYPE html>
+  <html lang=en>
+    <%- include('./headOpening'); %>
+      <link rel="stylesheet" href="../css/tree.css">
+      <link rel="stylesheet" href="../node_modules/orgchart/src/css/jquery.orgchart.css">
+    <%- include('./headClosing'); %>
+    
+    
+    <body>
+      <%- include('./navigation') %> 
 
-    
+      <main class="content-area">
+        <div class="row-1">
+          <form id='degreeInputForm'>
+            <label for="degreeInput">Degree</label>
+            <input type="text" name="search" id="degreeInput" placeholder="Search...">
+                <button id="searchBtn" href="#">Search</button>
+          </form>
+          <button id="traverseBtn" href="#">Traverse</button>
+        </div>
+        <h1>Contact Trace Tree</h1>
+        <div id="chart-container"></div>
+      </main>
 
-    <main class="content-area">
-      <div class="row-1">
-        <form id='degreeInputForm'>
-          <label for="degreeInput">Degree</label>
-          <input type="text" name="search" id="degreeInput" placeholder="Search...">
-              <button id="searchBtn" href="#">Search</button>
-        </form>
-      </div>
-      <h1>Contact Trace Tree</h1>
-      <div id="chart-container"></div>
-    </main>
- 
-    <!-- Problem: the code is working if we use 2 script of the jquery or using another from remote and the local -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
-    <!-- <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script> -->
-    
-    <script type="text/javascript" src="../renderers/require.js"></script>
-    <!-- <script type="text/javascript" src="../node_modules/jquery-mockjax/dist/jquery.mockjax.min.js"></script> -->
-    <script type="text/javascript" src="../node_modules/orgchart/dist/js/jquery.orgchart.min.js"></script>
-    <script type="text/javascript" src="../renderers/treePageRenderer.js"></script>
-    
-<%- include('./footer'); %>
+      <!-- Problem: the code is working if we use 2 script of the jquery or using another from remote and the local -->
+      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
+      <!-- <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script> -->
+  
+      <script type="text/javascript" src="../renderers/require.js"></script>
+      <!-- <script type="text/javascript" src="../node_modules/jquery-mockjax/dist/jquery.mockjax.min.js"></script> -->
+      <script type="text/javascript" src="../node_modules/orgchart/dist/js/jquery.orgchart.min.js"></script>
+      <script type="text/javascript" src="../renderers/treePageRenderer.js"></script>
+      <%- include('./footer'); %>
+    </body>
+  </html>

@@ -1,27 +1,39 @@
-<%- include('./header'); %> 
+<!DOCTYPE html>
+  <html lang=en>
+    <%- include('./headOpening'); %> 
+      <link rel="stylesheet" href="../css/data.css">
+    <%- include('./headOpening'); %> 
 
-<%- include('./dataNavigation'); %> 
-  <link rel="stylesheet" href="../css/data.css">
-  <h2>Visitor Table</h2>
-  <div class="table-area">
-        <table id="visitorTBL" class="data-tbl">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-               <!-- table headers will be inserted here -->
-            </tr>
-          </thead>
-          <tbody>
-            <!-- data will be inserted here -->
-          </tbody>
+    <body>
+      <%- include('./navigation'); %> 
+      
+      <main>
+        <div class="content-area">
+          <%- include('./dataNavigation'); %> 
+      
+          <h2>Visitor Table</h2>
+          <div class="table-area">
+            <table id="visitorTBL" class="data-tbl">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <!-- table headers will be inserted here -->
+                </tr>
+              </thead>
+              <tbody>
+                <!-- data will be inserted here -->
+              </tbody>
 
-        </table>
-    </div>
-  
-  </div>
-</main>
+            </table>
+          </div>
+        
+        </div>
+      </main>
 
-  <script src="../renderers/require.js"></script>
-  <script src="../renderers/visitorDataPage.js"></script>
-  <script src="../renderers/dataNavigationRenderer.js"></script>
-<%- include('./footer'); %> 
+      <script src="../renderers/require.js"></script>
+      <script src="../renderers/visitorDataPage.js"></script>
+      <script src="../renderers/dataNavigationRenderer.js"></script>
+      <%- include('./footer'); %> 
+
+    </body>
+  </html>

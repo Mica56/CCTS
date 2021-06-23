@@ -1,6 +1,12 @@
-<%- include('./header'); %> 
-    <link rel="stylesheet" href="../css/index.css">
-    
+<!DOCTYPE html>
+<html lang=en>
+
+<%- include('./headOpening'); %> 
+	<link rel="stylesheet" href="../css/index.css">
+<%- include('./headClosing'); %> 
+
+<body>
+	<%- include('./navigation'); %> 
     <main>
 		<div class="content-area">
 			<div class="section-1">
@@ -20,7 +26,9 @@
 		</div>
 	</main>
 
+	<script src="../renderers/require.js"></script>
+	<script src="../renderers/indexPageRenderer.js"></script>
+	<%- include('./footer'); %>
 
-    <script src="../renderers/require.js"></script>
-    <script src="../renderers/indexPageRenderer.js"></script>
-<%- include('./footer'); %>
+	</body>
+</html>

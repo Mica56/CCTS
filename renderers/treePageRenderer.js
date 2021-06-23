@@ -15,9 +15,9 @@ async function displayTree(obj, degree){
   // build the tree
   createTree(datasource)
   // add handler for the click function of nodes
-  $('#chart-container').find('.node').on('click', function () {
-    alert(JSON.stringify($(this).data('nodeData')));
-  });
+  // $('#chart-container').find('.node').on('click', function () {
+  //   alert(JSON.stringify($(this).data('nodeData')));
+  // });
 
 }// end of display tree
 
@@ -56,3 +56,11 @@ function createTree(datasource) {
     'nodeContent': 'title'
   });
 }
+
+$('#traverseBtn').click( function () {
+  var $chart = $(".orgchart");
+  console.log($($chart.children().children().children().toArray()).css('background-color', 'blue'));
+  $chart.children().children().children(':nth-child(1)').css('background-color', 'green');
+  console.log($chart.children().children().children('ul').children());
+  console.log($chart.children().children().children('ul').children());
+})

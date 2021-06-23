@@ -51,7 +51,6 @@ db.once('open', async function () {
 let win = null;// for reference to the window
 let winChild = null; // for reference to the child window
 let winData = null;
-exports.win = win;
 // declare variables to hold the database data
 let visitors,  visits, establishments;
 /*
