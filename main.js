@@ -61,6 +61,7 @@ function createWindow (file) {
       width: 800,
       height: 600,
       show: false,
+      fullscreen: true,
       webPreferences: {
         preload: path.join(__dirname, 'preload.js'),
         contextIsolation: false,
@@ -220,10 +221,43 @@ ipcMain.on('createTreeFromVisit', function (event, obj) {
     win.loadURL(`file://${__dirname}/views/tree.ejs`);
 
     win.webContents.once('did-finish-load', () => {// .on causes the renderer to execute the event 'did-finish-load' twice
-        console.log('this should only happen once');
+        // console.log('this should only happen once');
         win.webContents.send('createTree', obj);
+        console.log('this should only happen once');
     });
 });
+
+ipcMain.on('reqTreeTable', function (event, data) {
+    // console.log('root: ', JSON.parse(data));
+    data = JSON.parse(data);
+    console.log(data);
+    let newWindow = framelessWindow('/contactTracingTable.ejs');
+    
+    newWindow.once('ready-to-show', () => {
+        newWindow.show()
+        newWindow.webContents.send('contactTracingData', data);
+    });
+});
+
+function framelessWindow (file) {
+    let newWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        show: false,
+        // frame: false,// make window frameless
+        titleBarStyle: 'customButtonsOnHover',
+        fullscreen: true,
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js'),
+            contextIsolation: false,
+            nodeIntegration: true
+        }
+    });
+
+    newWindow.loadURL('file://' + __dirname + '/views' + file);
+    return newWindow;
+}
+
 
 
 /*
