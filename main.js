@@ -33,20 +33,22 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', async function () {
     //connected
+    loadData();
+});
+
+async function loadData() {
     try {
-        visitors = await VisitorModel.find({}).exec()
-        console.log('visitor found');
+        visitors = await visitorDataPageHandler.getVisitors();
         // console.log(visitors);
-        establishments = await EstablishmentModel.find({}).exec();
+        establishments = await establishmentDataPageHandler.getEstablishments();
         // console.log(establishments);
-        visits = await VisitModel.find({}).exec();
+        visits = await visitDataPageHandler.getVisits();
         // console.log(visits);
     } catch (err) {
         console.log(err);
     }
     console.log('Database setup Sucessful');
-
-});
+}
 
 let win = null;// for reference to the window
 let winChild = null; // for reference to the child window
@@ -155,7 +157,9 @@ ipcMain.on('reqVisit', (event, msg)=>{
 */
 
 // handler for request of establishment data
-ipcMain.handle('reqEstabData', establishmentDataPageHandler.getEstablishments);
+ipcMain.handle('reqEstabData', function () {
+    return establishments;
+});
 
 /*
     #visitorDataPage (visitorDataPage.js)
@@ -164,7 +168,9 @@ ipcMain.handle('reqEstabData', establishmentDataPageHandler.getEstablishments);
 */
 
 // handler for the request of visitor data
-ipcMain.handle('reqVisitorData',visitorDataPageHandler.getVisitors);
+ipcMain.handle('reqVisitorData', function () {
+    return visitors;
+});
 
 /*
     #visitDataPage (visitDataPage.js)
@@ -173,7 +179,9 @@ ipcMain.handle('reqVisitorData',visitorDataPageHandler.getVisitors);
 */
 
 // handler for the request of visit data
-ipcMain.handle('reqVisitData', visitDataPageHandler.getVisits);
+ipcMain.handle('reqVisitData', function () {
+    return visits;
+});
 
 
 /*
@@ -209,37 +217,38 @@ ipcMain.on('exit:detected', scannerPageHandler.exit);
     #treePage (treePageRenderer.js)
     Below are the handlers for the tree page
 */
-ipcMain.handle('treePage:getData', function (event, obj, degree) {
-    return treePageHandler.buildTree(obj, degree);
+ipcMain.handle('treePage:getData', async function (event, obj, level) {
+    let datasource = await treePageHandler.buildTree(obj, level);// request for the data [structured as a tree]
+    return datasource;// return the datasource
 });
 
-ipcMain.on('invalidDegreeInput', function (event, degree) {
-    treePageHandler.showDegreeError(win, degree);
+ipcMain.on('invalidLevelInput', function (event, level) {// warn the user for invalid level input
+    treePageHandler.showLevelError(win, level);
 })
 
-ipcMain.on('createTreeFromVisit', function (event, obj) {
+ipcMain.on('createTreeFromVisit', function (event, obj) {// load the tree after clicking the row of visit data
     win.loadURL(`file://${__dirname}/views/tree.ejs`);
 
-    win.webContents.once('did-finish-load', () => {// .on causes the renderer to execute the event 'did-finish-load' twice
+    win.webContents.once('did-finish-load', () => {// wait for the file to load before firing the event
         // console.log('this should only happen once');
         win.webContents.send('createTree', obj);
         console.log('this should only happen once');
     });
 });
 
-ipcMain.on('reqTreeTable', function (event, data) {
+ipcMain.on('reqTreeTable', function (event, data) {// create a new window for displaying the table version of the tree
     // console.log('root: ', JSON.parse(data));
     data = JSON.parse(data);
     console.log(data);
     let newWindow = framelessWindow('/contactTracingTable.ejs');
     
-    newWindow.once('ready-to-show', () => {
+    newWindow.once('ready-to-show', () => {// wait for the window to be ready before showing it and firing the event
         newWindow.show()
         newWindow.webContents.send('contactTracingData', data);
     });
 });
 
-function framelessWindow (file) {
+function framelessWindow (file) {// for creating frameless window
     let newWindow = new BrowserWindow({
         width: 800,
         height: 600,

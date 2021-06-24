@@ -4,10 +4,10 @@ const EstablishmentModel = require('../models/establishmentModel.js');
 const VisitorModel = require('../models/visitorModel.js');
 const VisitModel = require('../models/visitModel.js');
 
-exports.buildTree = async function (root, degree) {
+exports.buildTree = async function (root, level) {
 
-    if(!degree){
-        degree = 1;
+    if(!level){
+        level = 1;
     }
     let currDeg = 1;// counter
 
@@ -54,7 +54,7 @@ exports.buildTree = async function (root, degree) {
 
 
     let positives = puis;// set the array for looping
-    while(currDeg++ != degree){// create the tree while there are positives
+    while(currDeg++ != level){// create the tree while there are positives
         let tempPositives = [];
         for(let i = 0; i < positives.length; ++i){// create the tree
             console.log('this is executed');
@@ -128,6 +128,6 @@ function setObjects(objs){
     }
 }
 
-exports.showDegreeError = function (win, degree){
-    dialog.showMessageBoxSync(win, { type: 'warning', message: `Invalid input: ${degree}.\nOnly values from 1 - 5 are valid.`});
+exports.showLevelError = function (win, level){
+    dialog.showMessageBoxSync(win, { type: 'warning', message: `Invalid input: ${level}.\nOnly values from 1 - 5 are valid.`});
 }
