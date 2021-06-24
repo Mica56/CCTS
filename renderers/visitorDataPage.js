@@ -34,7 +34,6 @@
 
   $('visitor.ejs').ready(async function(){
 
-
     let msg = "requesting visitor data..";
     let result = await ipcRenderer.invoke('reqVisitorData', msg);
     // console.log(result);
@@ -52,11 +51,11 @@
 
       let id = obj._id; // get the id of the object (for element id and qrcode)
       let name = obj.name;// get the name of the object (for the qrcode)
-
+      
       let addNewRow = `<tr id=${id}></tr>`// add new row for the current object
       $('#visitorTBL > tbody').append(addNewRow);
 
-      let addNumberColumn = `<td>${counter++}<a id=${'qr-'+ id} href='#'>Print QR</a></td>`
+      let addNumberColumn = `<td><input type="checkbox" name=${name} value=${id}>${counter++}<a id=${'qr-'+ id} href='#'>Print QR</a></td>`
       $(`#visitorTBL > tbody tr#${id}`).append(addNumberColumn);
 
       $(`#qr-${id}`).click( function () { // set the click function for generating qr code
@@ -100,4 +99,15 @@
     
     $(`tbody tr:not(:contains('${input}'))`).hide();
     $(`tbody tr:contains('${input}')`).show();
+  });
+
+
+  let selectedElements = [];
+  $('#deleteBtn').click( function (event) {// set the event handler for the delete button
+    event.preventDefault();
+    selectedElements = [];
+    $('tbody').find(':checked').each( function () {
+      selectedElements.push($(this).val());
+    });
+    console.log(selectedElements);
   });

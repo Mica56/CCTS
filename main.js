@@ -26,24 +26,37 @@ const qrGeneratorHandler = require('./handlers/QrGeneratorHandler.js');
 
 // setup mongodb database connection
 const mongoose = require('mongoose');
-const visitorModel = require('./models/visitorModel.js');
+
+// declare variables to hold the database data
+let visitors,  visits, establishments;
+
 mongoose.connect('mongodb+srv://admin:Admin.Pass123@cluster0.cyvh9.mongodb.net/contact_tracing?retryWrites=true&w=majority');
+
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', async function () {
     //connected
-    loadData();
+    loadData(establishments, visitors, visits);
 });
+
+async function getVisitors() {
+    return visitorDataPageHandler.getVisitors();
+}
+
+async function getVisits() {
+    return visitDataPageHandler.getVisits();
+}
+
+async function getEstablishments(establishments) {
+    return establishmentDataPageHandler.getEstablishments();
+}
 
 async function loadData() {
     try {
-        visitors = await visitorDataPageHandler.getVisitors();
-        // console.log(visitors);
-        establishments = await establishmentDataPageHandler.getEstablishments();
-        // console.log(establishments);
-        visits = await visitDataPageHandler.getVisits();
-        // console.log(visits);
+        establishments = await getEstablishments();
+        visitors = await getVisitors();
+        visits = await getVisits();
     } catch (err) {
         console.log(err);
     }
@@ -53,8 +66,7 @@ async function loadData() {
 let win = null;// for reference to the window
 let winChild = null; // for reference to the child window
 let winData = null;
-// declare variables to hold the database data
-let visitors,  visits, establishments;
+
 /*
     Create the window
 */
@@ -158,8 +170,12 @@ ipcMain.on('reqVisit', (event, msg)=>{
 
 // handler for request of establishment data
 ipcMain.handle('reqEstabData', function () {
-    return establishments;
+    return getEstablishments();
 });
+
+ipcMain.on('reqDeleteEstablishment', async function (event, id) {
+    await establishmentDataPageHandler.deleteEstablishment(win, id);
+})
 
 /*
     #visitorDataPage (visitorDataPage.js)
@@ -169,7 +185,7 @@ ipcMain.handle('reqEstabData', function () {
 
 // handler for the request of visitor data
 ipcMain.handle('reqVisitorData', function () {
-    return visitors;
+    return getVisitors();
 });
 
 /*
@@ -180,9 +196,12 @@ ipcMain.handle('reqVisitorData', function () {
 
 // handler for the request of visit data
 ipcMain.handle('reqVisitData', function () {
-    return visits;
+    return getVisits();
 });
 
+ipcMain.on('reqDeleteVisit', async function (event, id) {
+    await visitDataPageHandler.deleteVisit(win, id);
+})
 
 /*
     #visitDataPage (visitDataPage.js)
@@ -204,13 +223,17 @@ ipcMain.on('reqScan', function (event, msg) {
     win.loadURL(`file://${__dirname}/views/scanner.ejs`);
 })
 
-ipcMain.on('entry:detected', scannerPageHandler.entrance);
+ipcMain.on('entry:detected', async function (event, id) {
+    await scannerPageHandler.entrance(id);
+});
 
 /*
     @das:modify --> rewrite the queries using the async await syntax
     Handle exit detection
 */
-ipcMain.on('exit:detected', scannerPageHandler.exit);
+ipcMain.on('exit:detected', async function (event, id) {
+    await scannerPageHandler.exit(id);
+});
 
 
 /*
@@ -232,14 +255,19 @@ ipcMain.on('createTreeFromVisit', function (event, obj) {// load the tree after 
     win.webContents.once('did-finish-load', () => {// wait for the file to load before firing the event
         // console.log('this should only happen once');
         win.webContents.send('createTree', obj);
-        console.log('this should only happen once');
+        // console.log('this should only happen once');
     });
 });
+
+ipcMain.on('invalidSelectionForTrace', function (event, length) {
+    visitDataPageHandler.showSelectionError(win, length);
+});
+
 
 ipcMain.on('reqTreeTable', function (event, data) {// create a new window for displaying the table version of the tree
     // console.log('root: ', JSON.parse(data));
     data = JSON.parse(data);
-    console.log(data);
+    // console.log(data);
     let newWindow = framelessWindow('/contactTracingTable.ejs');
     
     newWindow.once('ready-to-show', () => {// wait for the window to be ready before showing it and firing the event
@@ -285,7 +313,7 @@ function framelessWindow (file) {// for creating frameless window
 ipcMain.on('reqVisitorReg', (event, msg)=>{
     console.log(msg);
     win.loadURL(`file://${__dirname}/views/visitorRegistration.ejs`);
-    console.log('hey?');
+    // console.log('hey?');
 });
 // for directing to the establishment registration page
 ipcMain.on('reqEstabReg', (event, msg)=>{
@@ -305,8 +333,12 @@ ipcMain.on('reqAdminReg', (event, msg)=>{
 */
 
 // for the request of writing the visitor data into the database
-ipcMain.on('writeVisitorData', function (event, entity) {
-    visitorRegistrationHandler.registerVisitor(event, entity, win);
+ipcMain.on('writeVisitorData', async function (event, entity) {
+    try{
+        await visitorRegistrationHandler.registerVisitor(event, entity, win);
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 /*
@@ -315,8 +347,12 @@ ipcMain.on('writeVisitorData', function (event, entity) {
 */
 
 // for the request of writing the establishment data into the database
-ipcMain.on('writeEstabData', function (event, entity) {
-    establishmentRegistrationHandler.registerEstablishment(event, entity, win);
+ipcMain.on('writeEstabData', async function (event, entity) {
+    try {
+        await establishmentRegistrationHandler.registerEstablishment(event, entity, win);
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 /*
@@ -327,4 +363,5 @@ ipcMain.on('writeEstabData', function (event, entity) {
 // for the request of writing the admin data into the database
 ipcMain.on('writeAdminData', function (event, entity) {
     adminRegistrationHandler.registerAdmin(event, entity, win);
+    
 });

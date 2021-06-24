@@ -7,7 +7,14 @@ const VisitModel = require('../models/visitModel.js');
 
 
 exports.getVisitors = async function() {
-	var visitors = await VisitorModel.find({}, 'name address contactNumber email covidStatus vaccine dateRegistered').exec();
+    let visitors;
+    try {
+	    visitors = await VisitorModel.find({}, 'name address contactNumber email covidStatus vaccine dateRegistered').exec();
+        console.log('Visitors Data successfully loaded!');
+    } catch (err) {
+        dialog.showMessageBoxSync(win, { type: 'warning', message: `An error has occured while getting the visitors data!\nPlease contact the developer`});
+        console.log(err);
+    }
 	return JSON.stringify(visitors);
     /*  
         *   @das:add -->    Make a query to the database to fetch all the visitor data

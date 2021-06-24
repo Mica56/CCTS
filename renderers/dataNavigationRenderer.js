@@ -29,3 +29,5 @@ visitTblBtn.click(function(event){
     // alert('Visit Table');
     ipcRenderer.send('reqVisit', 'access to Visit Data page successful.');
 });
+
+

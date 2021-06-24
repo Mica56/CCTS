@@ -4,7 +4,7 @@ const EstablishmentModel = require('../models/establishmentModel.js');
 const VisitorModel = require('../models/visitorModel.js');
 const VisitModel = require('../models/visitModel.js');
 
-exports.entrance = async (event, id) => {
+exports.entrance = async (id) => {
     console.log('entry:detected');
 
     let visitor, establishment;
@@ -36,7 +36,7 @@ exports.entrance = async (event, id) => {
 }
 
 
-exports.exit = async (event, id) => {
+exports.exit = async (id) => {
     console.log('exit:detected');
     let visitor, establishment;
     // get the id of the visitor

@@ -30,8 +30,10 @@
                     ]
 
 */
+let selectedElements = [];
 
   $('visit.ejs').ready(async function(event){
+    let dataPageName = 'visit';
     let msg = "requesting visit data..";
     let result = await ipcRenderer.invoke('reqVisitData', msg);
 
@@ -48,15 +50,13 @@
     for (const obj of Object.values(dataArr)) { // add rows 
       let addNewRow;
       let id = obj._id;
+      let name = obj.name;
       addNewRow = `<tr id=${obj._id}></tr>`
       $('#visitTBL > tbody').append(addNewRow);
 
-      let addNumberColumn = `<td>${counter++}</td>`
-      $(`#visitTBL tbody tr#${id}`).append(addNumberColumn);
+      let addNumberColumn = `<td><input type="checkbox" name=${name} value=${id}>${counter++}</td>`
+      $(`#visitTBL tbody tr#${id}`).append(addNumberColumn).data('obj', obj);
 
-      $(`#${id}`).click( function (event) {// set up the click function for the row
-        ipcRenderer.send('createTreeFromVisit', obj);
-      });
 
       // add the columns
       for(const [key, value] of Object.entries(obj)){
@@ -78,20 +78,56 @@
         $(`#visitTBL tbody tr#${id}`).append(addNewColumn);
       }
     }
-
-  });
-
-
-  $('button#searchBtn').click( function () {
-    let input = $('input#searchInput').val();
     
-    $(`tbody tr:not(:contains('${input}'))`).hide();
-    $(`tbody tr:contains('${input}')`).show();
+
+    $("input[type='checkbox']").click( function () {
+      getChecked();//update the list of checked element whenever the user checks a checkbox
+    });
+
   });
 
-  $('#searchInput').keyup( function () {
-    let input = $('input#searchInput').val();
-    
-    $(`tbody tr:not(:contains('${input}'))`).hide();
-    $(`tbody tr:contains('${input}')`).show();
+
+$('button#searchBtn').click( function () {
+  let input = $('input#searchInput').val();
+  
+  $(`tbody tr:not(:contains('${input}'))`).hide();
+  $(`tbody tr:contains('${input}')`).show();
+});
+
+$('#searchInput').keyup( function () {
+  let input = $('input#searchInput').val();
+  
+  $(`tbody tr:not(:contains('${input}'))`).hide();
+  $(`tbody tr:contains('${input}')`).show();
+});
+
+
+
+$('#deleteBtn').click( function (event) {// set the event handler for the delete button
+  event.preventDefault();
+  if(selectedElements.length != 0){
+    ipcRenderer.send('reqDeleteVisit', selectedElements);
+  }
+  
+});
+
+function getChecked () {
+  selectedElements = [];
+  $('tbody').find(':checked').each( function () {
+    selectedElements.push($(this).val());
   });
+}
+
+
+
+$('#traceBtn').click( function (event) {
+  event.preventDefault();
+  if(selectedElements.length == 1){
+    let obj = $(`#${selectedElements[0]}`).data('obj');
+    ipcRenderer.send('createTreeFromVisit', obj);
+  } else {
+    ipcRenderer.send('invalidSelectionForTrace', selectedElements.length);
+  }
+
+  // console.log(selectedElements);
+})

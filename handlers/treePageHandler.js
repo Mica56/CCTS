@@ -131,3 +131,4 @@ function setObjects(objs){
 exports.showLevelError = function (win, level){
     dialog.showMessageBoxSync(win, { type: 'warning', message: `Invalid input: ${level}.\nOnly values from 1 - 5 are valid.`});
 }
+

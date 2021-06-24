@@ -30,17 +30,10 @@
                     ]
 
 */
+let selectedElements = [];
 
 $('establishment.ejs').ready(async function(event){
   // Setup the search functionality
-  $('#searchInput').keyup( function () {
-    let input = $('input#searchInput').val();
-    
-    $(`tbody tr:not(:contains('${input}'))`).hide();
-    $(`tbody tr:contains('${input}')`).show();
-  });
-
-
   
   let msg = "requesting estabishment data..";
   // Asks for data in the main process
@@ -59,11 +52,11 @@ $('establishment.ejs').ready(async function(event){
     let addNewRow;
     
     let id = obj._id;// get the _id property of the object for use in tr element id
-    
+    let name = obj.name;
     addNewRow = `<tr id=${id}></tr>`// add new row for the current object
     $('#establishmentTBL > tbody').append(addNewRow);
 
-    let addNumberColumn = `<td>${counter++}</td>`;// add new column for the number row
+    let addNumberColumn = `<td><input type="checkbox" name=${name} value=${id}>${counter++}</td>`;// add new column for the number row
     $(`#establishmentTBL tbody tr#${id}`).append(addNumberColumn);
 
     
@@ -87,15 +80,35 @@ $('establishment.ejs').ready(async function(event){
     }
   }
 
+  $("input[type='checkbox']").click( function () {
+    getChecked();//update the list of checked element whenever the user checks a checkbox
+  });
+
 }); 
 
-
+$('#searchInput').keyup( function () {
+  let input = $('input#searchInput').val();
   
-  // $('button#searchBtn').click( function () {
-  //   let input = $('input#searchInput').val();
-    
-  //   $(`tbody tr:not(:contains('${input}'))`).hide();
-  //   $(`tbody tr:contains('${input}')`).show();
-  // });
+  $(`tbody tr:not(:contains('${input}'))`).hide();
+  $(`tbody tr:contains('${input}')`).show();
+});
+
+
+
+
+$('#deleteBtn').click( function (event) {// set the event handler for the delete button
+  event.preventDefault();
+  if(selectedElements.length != 0){
+    ipcRenderer.send('reqDeleteEstablishment', selectedElements);
+  }
+  
+});
+
+function getChecked () {
+  selectedElements = [];
+  $('tbody').find(':checked').each( function () {
+    selectedElements.push($(this).val());
+  });
+}
 
   
