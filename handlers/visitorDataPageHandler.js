@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { dialog } = require('electron');
 
 const EstablishmentModel = require('../models/establishmentModel.js');
 const VisitorModel = require('../models/visitorModel.js');
@@ -21,4 +22,16 @@ exports.getVisitors = async function() {
         *       Note: call the 'toObject' method of the result of the query before returning it.
         *           ex: result.toObject();
     */
+}
+
+exports.deleteVisitor = async function (win, id) {
+    for(let i = 0; i < id.length; ++i){
+        try {
+            await VisitorModel.findByIdAndDelete({_id : mongoose.Types.ObjectId(id[i])}).exec();
+            dialog.showMessageBoxSync(win, { type: 'warning', message: `Delete sucess!`});
+        }catch(err) {
+            console.log(err);
+            dialog.showMessageBoxSync(win, { type: 'warning', message: `Delete operation failed for id:${id[0]}. Please contact the developer.`});
+        }
+    }
 }

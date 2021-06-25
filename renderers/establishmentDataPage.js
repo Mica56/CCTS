@@ -180,6 +180,10 @@ function getChecked () {
     });
 }
 
+function getDataArr() {
+    return dataArr;
+}
+
 function getTableName() {
     return tableName;
 }
@@ -190,9 +194,9 @@ $('#sortBtn').click( function (event) {
     
     let field = $('#field').children('option:selected').val();
     let order = $('#order').children('option:selected').val();
-    sort(dataArr, 0, dataArr.length - 1, field, order);
+    sort(getDataArr(), 0, dataArr.length - 1, field, order);
     clearTable();
-    displayTable(getTableName(), dataArr);
+    displayTable(getTableName(), getDataArr());
 
 });
 

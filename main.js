@@ -188,6 +188,10 @@ ipcMain.handle('reqVisitorData', function () {
     return getVisitors();
 });
 
+ipcMain.on('reqDeleteVisitor', async function (event, id) {
+    await visitorDataPageHandler.deleteVisitor(win, id);
+})
+
 /*
     #visitDataPage (visitDataPage.js)
     @unfinished
