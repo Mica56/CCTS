@@ -4,7 +4,6 @@ let tableName = 'visit';
 
 ipcRenderer.on('contactTracingData', function (event, datasource) {
     dataArr = treeToArray(datasource);// translate the tree to array
-    quicksort(dataArr, 0, dataArr.length-1);// sort the array;
     // build the table
     displayTable(getTableName(), getDataArr());
 });
@@ -32,7 +31,7 @@ function hasChildren(node) {// returns true is the node has a children; Otherwis
 
 
 
-function treeToArray (root) {
+function treeToArray (root) {// transform the tree to array using BFS
     let nodes = [];// initialize an array for storage of nodes to return
 
     if(root) {// if there is an element
@@ -59,38 +58,12 @@ function treeToArray (root) {
 }// end of build table;
 
 
-function quicksort (arr, l, r) {
-    if(l >= r)    return;// exit if there is only one element or no element
-
-    let p = partition(arr, l, r);// partition the array into two
-
-    quicksort(arr, l, p-1);// do the quick sort for the elements less than the pivot
-    quicksort(arr, p+1, r);// do the quick sort for the elements greater than or equal to the pivot
-    
-}
-
-function partition (arr, l , r) {
-    pivot = arr[r];// get the pivot
-    i = l - 1;// less the i by 1 to make it less than j
-
-    for (let j = l; j < r; ++j) {// navigate through the array
-        if (arr[j].name.toUpperCase() < pivot.name.toUpperCase()){// if the current element is less than the pivot
-            i += 1;// increment the index i
-            [arr[i], arr[j]] = [arr[j], arr[i]];// swap elements in index i and j
-        }
-    }
-
-    [arr[i + 1], arr[r]] = [arr[r], arr[i + 1]];// place the pivot in the center of the array;
-    return i + 1;// return the index of the pivot
-}
 
 $('#printTblBtn').click(function (event) {
     event.preventDefault();
-    ipcRenderer.send('reqPrint', true);
+    ipcRenderer.send('reqPrintContactTracingTable');
 })
 
-
-// ------------------------------
 function byName(obj) {
     return obj.visitor.name.toUpperCase();
 }

@@ -27,6 +27,14 @@ async function displayTree(obj, level){
         // console.log($(this).data('nodeData'));
     });
 
+    $('#chart-container').orgchart({
+        'data' : datasource,
+        'visibleLevel': 2,
+        'nodeContent': 'title',
+        'exportButton': true,
+        'exportFilename': 'MyOrgChart'
+    });
+
 }// end of display tree
 
 
