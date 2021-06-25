@@ -37,13 +37,13 @@ let tableName = 'visitor';
 
 
 $('visitor.ejs').ready(async function(){
-
+    $('#traceBtn').hide();
     let msg = "requesting visitor data..";
     let result = await getData('reqVisitorData', msg);
     // console.log(result);
     dataArr = JSON.parse(result);
     // add the headers for the table
-    displayTable(getTableName(), dataArr);
+    displayTable(getTableName(), getDataArr());
 
     $("input[type='checkbox']").click( function () {
         getChecked();//update the list of checked element whenever the user checks a checkbox
@@ -213,3 +213,4 @@ function clearTable() {
     $('thead').empty();
     $('tbody').empty();
 }
+

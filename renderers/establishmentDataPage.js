@@ -91,6 +91,7 @@ async function sort (arr, l, r, field, order) {
 
 $('establishment.ejs').ready(async function(event){
     // Setup the search functionality
+    $('#traceBtn').hide();
     
     let msg = "requesting estabishment data..";
     // Asks for data in the main process
@@ -205,3 +206,4 @@ function clearTable() {
     $('tbody').empty();
 }
     
+
