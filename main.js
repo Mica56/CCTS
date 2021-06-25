@@ -65,8 +65,7 @@ async function loadData() {
 }
 
 let win = null;// for reference to the window
-let winChild = null; // for reference to the child window
-let winData = null;
+let contactTracingTableWindow = null;
 
 /*
     Create the window
@@ -106,6 +105,17 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit()
+});
+
+
+ipcMain.on('reqPrint', async function (event) {
+
+    await qrGeneratorHandler.printPage(win);
+});
+
+ipcMain.on('reqPrintContactTracingTable', async function (event) {
+
+    await qrGeneratorHandler.printPage(contactTracingTableWindow);
 });
 
 /*
@@ -189,7 +199,7 @@ ipcMain.on('reqEditEstablishment', async function (event, id) {
 });
 
 ipcMain.on('reqUpdateEstablishment', async function (event, id, obj) {
-    console.log(obj);
+    // console.log(obj);
     await establishmentDataPageHandler.updateEstablishment(win, id, obj);
 })
 
@@ -219,7 +229,7 @@ ipcMain.on('reqEditVisitor', async function (event, id) {
 });
 
 ipcMain.on('reqUpdateVisitor', async function (event, id, obj) {
-    console.log(obj);
+    // console.log(obj);
     await visitorDataPageHandler.updateVisitor(win, id, obj);
 });
 
@@ -288,7 +298,7 @@ ipcMain.on('createTreeFromVisit', function (event, obj) {// load the tree after 
     win.loadURL(`file://${__dirname}/views/tree.ejs`);
 
     win.webContents.once('did-finish-load', () => {// wait for the file to load before firing the event
-        // console.log('this should only happen once');
+        // console.log('`this `should only happen once');
         win.webContents.send('createTree', obj);
         // console.log('this should only happen once');
     });
@@ -298,17 +308,28 @@ ipcMain.on('invalidSelectionForTrace', function (event, length) {
     visitDataPageHandler.showSelectionError(win, length);
 });
 
+function getContactTracingTableWindow () {
+    return contactTracingTableWindow;
+}
 
+function setContactTracingTableWindow (window) {
+    contactTracingTableWindow = window;
+}
 ipcMain.on('reqTreeTable', function (event, data) {// create a new window for displaying the table version of the tree
     // console.log('root: ', JSON.parse(data));
     data = JSON.parse(data);
     // console.log(data);
+    
     let newWindow = framelessWindow('/contactTracingTable.ejs');
     
     newWindow.once('ready-to-show', () => {// wait for the window to be ready before showing it and firing the event
-        newWindow.show()
+        newWindow.show();
         newWindow.webContents.send('contactTracingData', data);
+        setContactTracingTableWindow(newWindow);
     });
+
+    
+
 });
 
 function framelessWindow (file) {// for creating frameless window

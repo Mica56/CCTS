@@ -49,7 +49,7 @@ exports.getVisitor = async function (win, id) {
 
 exports.updateVisitor = async function (win, id, obj) {
     try{
-        console.log(obj);
+        // console.log(obj);
         await VisitorModel.findByIdAndUpdate(mongoose.Types.ObjectId(id), {
             $set : {
                 name: obj.name,

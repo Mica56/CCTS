@@ -8,7 +8,7 @@ const AdminModel = require('../models/adminModel.js')
 
 
 exports.registerAdmin = async function (event,entity, win) {
-    console.log(entity);
+    // console.log(entity);
 	const Admin = new AdminModel({
         name: entity.name,
         address: entity.address,

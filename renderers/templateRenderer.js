@@ -7,13 +7,13 @@
 // Note: you may want to modify the id's of the elements
 
 // @clar:add --> get all the buttons and store them in variables
-let indexPageBtn = $('a#indexPageButton');
-let dataPageBtn = $('a#dataPageButton');
-let treePageBtn = $('a#treePageButton');
-let scanPageBtn = $('a#scanPageButton');
-let regiPageBtn = $('a#registerPageButton');
-
-let testBtn = $('a#testButton');
+let indexPageBtn  =  $('a#indexPageButton');
+let dataPageBtn   = $('a#dataPageButton');
+let treePageBtn   = $('a#treePageButton');
+let scanPageBtn   = $('a#scanPageButton');
+let regiPageBtn   = $('a#registerPageButton');
+let printBtn      = $('a#printBtn');
+let testBtn       = $('a#testButton');
 
 
 // @clar:add --> setup the click event for the "to index page" button
@@ -60,6 +60,12 @@ testBtn.click(function(event){
   console.log('test');
   ipcRenderer.send('test', 'this is working.');
 });
+
+printBtn.click(function (event) {
+  event.preventDefault();
+  console.log('Printing...');
+  ipcRenderer.send('reqPrint');
+})
 
 
 // @sep,@micai fr @clar :: search button click event [for data page]

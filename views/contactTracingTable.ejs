@@ -8,15 +8,36 @@
     <body>
       <main>
         <div class="content-area">
-      
+          <div class="row">
+            <div class="col-1">
+              <div class="evvbuttons"><a id="printTblBtn" href="#" class="btn">Print</a></div>
+              <div class="evvbuttons"><a id="sortBtn" href="#" class="btn">Sort</a></div>
+              <div class="evvbuttons">
+                <select name="Fields" id="field" class='small-buttons'>
+                  <option value="name">Name</option>
+                  <option value="date">Date</option>
+                </select>
+              </div>
+              
+              <div class="evvbuttons">
+                <select name="Ordering" id="order" class="small-buttons">
+                  <option value="ascending">Ascending</option>
+                  <option value="descending">Descending</option>
+                </select>
+              </div>
+            </div>
+  
+            <div class="col-2">
+                <input type="text" name="search" id="searchInput" placeholder="Search...">
+            </div>
+          </div>
+          
+
           <h2>Contact Tracing Table</h2>
           <div class="table-area">
             <table id="visitTBL" class="data-tbl">
               <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <!-- table headers will be inserted here -->
-                </tr>
+                <!-- headers will be inserted here -->
               </thead>
               <tbody>
                 <!-- data will be inserted here -->

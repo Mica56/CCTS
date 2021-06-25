@@ -67,10 +67,10 @@ exports.buildTree = async function (root, level) {
     while(currDeg++ != level){// create the tree while there are positives
         let tempPositives = [];
         for(let i = 0; i < positives.length; ++i){// create the tree
-            console.log('this is executed');
+            // console.log('this is executed');
             positives[i].children = [];// add the children property
             // get the latest visit data for the possibly infected individual
-            console.log('id: ', positives[i].visitor._id);
+            // console.log('id: ', positives[i].visitor._id);
 
             let latestVisit = await VisitModel.findOne({ // get the latest visit data of the current visitor
                 visitor: mongoose.Types.ObjectId(positives[i].visitor._id)
@@ -79,7 +79,7 @@ exports.buildTree = async function (root, level) {
             .populate('visitor')
             .populate('establishment')
             .exec();
-            console.log(latestVisit);
+            // console.log(latestVisit);
             // @todo: Use the establishment to filter visitors visitors
             
             // get the possibly infected individuals of the current visitor

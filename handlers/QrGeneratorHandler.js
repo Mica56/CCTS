@@ -31,4 +31,27 @@ exports.generateQr = function (event, id, name) {
     });
 }
 
-
+exports.printPage = async function (win){
+    let pdfPath;
+    
+    try {
+        let options = 
+        {
+            marginsType: 1,
+            printBackground: true,
+            printSelectionOnly: true,
+            landscape: true,
+            pageSize: 'A4',
+            scaleFactor: 100
+        }
+        let data = await win.webContents.printToPDF(options);
+        pdfPath = path.join(os.homedir(), 'Desktop', 'temp.pdf');
+        fs.writeFile(pdfPath, data, (error) => {
+            if (error) throw error
+            console.log(`Wrote PDF successfully to ${pdfPath}`)
+        });
+    } catch (err) {
+        console.log(`Failed to write PDF to ${pdfPath}: `, err)
+    }
+}
+    
