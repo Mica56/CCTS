@@ -43,10 +43,7 @@ $('visit.ejs').ready(async function(event){
     // add the headers for the table
     displayTable(getTableName(), getDataArr());
 
-    $("input[type='checkbox']").click( function () {
-        getChecked();//update the list of checked element whenever the user checks a checkbox
-    });
-
+    
 });
 
 async function getData(request, msg) {
@@ -89,7 +86,7 @@ function displayTable(tableName, dataArr) {
         $(`#${getTableName()}TBL > tbody`).append(addNewRow);
 
         let addNumberColumn = `<td><input type="checkbox" name=${name} value=${id}>${counter++}</td>`;// add new column for the number row
-        $(`#${getTableName()}TBL tbody tr#${id}`).append(addNumberColumn);
+        $(`#${getTableName()}TBL tbody tr#${id}`).append(addNumberColumn).data('obj', obj);
 
         
         // add the columns
@@ -112,6 +109,10 @@ function displayTable(tableName, dataArr) {
             $(`#${getTableName()}TBL tbody tr#${id}`).append(addNewColumn);
         }
     }
+    
+    $("input[type='checkbox']").click( function () {
+        getChecked();//update the list of checked element whenever the user checks a checkbox
+    });
 }
 
 $('button#searchBtn').click( function () {

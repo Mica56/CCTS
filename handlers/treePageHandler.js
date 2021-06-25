@@ -27,10 +27,20 @@ exports.buildTree = async function (root, level) {
     
     let puis = await VisitModel.find({// get all the possibly infected individuals
         establishment: root.establishment._id,
-        entered: {
-            $gt: root.entered,
-            $lt: root.exited
-        }
+        $or : [
+            {
+                entered: {
+                    $gt: root.entered,
+                    $lt: root.exited
+                }
+            },
+            {
+                exited: {
+                    $gt: root.entered,
+                    $lt: root.exited
+                }
+            },
+        ]
     })
     .populate('visitor name covidStatus')
     .populate('establishment name')

@@ -45,10 +45,6 @@ $('visitor.ejs').ready(async function(){
     // add the headers for the table
     displayTable(getTableName(), getDataArr());
 
-    $("input[type='checkbox']").click( function () {
-        getChecked();//update the list of checked element whenever the user checks a checkbox
-    });
-
 });
 
 function getChecked () {
@@ -120,6 +116,10 @@ function displayTable(tableName, dataArr) {
             $(`#${getTableName()}TBL tbody tr#${id}`).append(addNewColumn);
         }
     }
+
+    $("input[type='checkbox']").click( function () {
+        getChecked();//update the list of checked element whenever the user checks a checkbox
+    });
 }
 
 $('button#searchBtn').click( function () {
@@ -214,3 +214,10 @@ function clearTable() {
     $('tbody').empty();
 }
 
+$('#editBtn').click( function (event) {
+    event.preventDefault();
+    if(getSelectedElements().length == 1){
+        ipcRenderer.send('reqEditVisitor', getSelectedElements()[0]);
+    }
+    
+});

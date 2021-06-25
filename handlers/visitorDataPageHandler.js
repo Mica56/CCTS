@@ -35,3 +35,36 @@ exports.deleteVisitor = async function (win, id) {
         }
     }
 }
+
+exports.getVisitor = async function (win, id) {
+    let visitor;
+    try {
+        visitor = await VisitorModel.findById({_id : mongoose.Types.ObjectId(id)});
+    } catch(err) {
+        console.log(err);
+        dialog.showMessageBoxSync(win, { type: 'warning', message: `Failed retrieving data with id: ${id}.\nPlease contact the developer.`});
+    }
+    return JSON.stringify(visitor);
+}
+
+exports.updateVisitor = async function (win, id, obj) {
+    try{
+        console.log(obj);
+        await VisitorModel.findByIdAndUpdate(mongoose.Types.ObjectId(id), {
+            $set : {
+                name: obj.name,
+                address: obj.address,
+                email: obj.email,
+                contactNumber: obj.contact,
+                covidStatus: obj.covidStatus,
+                vaccine: obj.vaccine
+            }
+            
+        });
+        dialog.showMessageBoxSync(win, { type: 'info', message: `Update sucess!`});
+    } catch (err) {
+        console.log(err);
+        dialog.showMessageBoxSync(win, { type: 'warning', message: `An error occured while updating obj with id: ${id}.\nPlease contact the developer.`});
+    }
+   
+}

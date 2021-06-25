@@ -30,7 +30,8 @@ const mongoose = require('mongoose');
 // declare variables to hold the database data
 let visitors,  visits, establishments;
 
-mongoose.connect('mongodb+srv://admin:Admin.Pass123@cluster0.cyvh9.mongodb.net/contact_tracing?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://admin:Admin.Pass123@cluster0.cyvh9.mongodb.net/contact_tracing?retryWrites=true&w=majority',
+                {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 
 const db = mongoose.connection;
@@ -175,6 +176,21 @@ ipcMain.handle('reqEstabData', function () {
 
 ipcMain.on('reqDeleteEstablishment', async function (event, id) {
     await establishmentDataPageHandler.deleteEstablishment(win, id);
+});
+
+ipcMain.on('reqEditEstablishment', async function (event, id) {
+    
+    
+    let establishmentData = await establishmentDataPageHandler.getEstablishment(win, id);
+    win.loadURL(`file://${__dirname}/views/establishmentRegistration.ejs`);
+    win.once('ready-to-show', () => {// wait for the window to be ready before showing it and firing the event
+        win.webContents.send('establishmentData', establishmentData);
+    });
+});
+
+ipcMain.on('reqUpdateEstablishment', async function (event, id, obj) {
+    console.log(obj);
+    await establishmentDataPageHandler.updateEstablishment(win, id, obj);
 })
 
 /*
@@ -190,7 +206,22 @@ ipcMain.handle('reqVisitorData', function () {
 
 ipcMain.on('reqDeleteVisitor', async function (event, id) {
     await visitorDataPageHandler.deleteVisitor(win, id);
-})
+});
+
+ipcMain.on('reqEditVisitor', async function (event, id) {
+    
+    
+    let visitorData = await visitorDataPageHandler.getVisitor(win, id);
+    win.loadURL(`file://${__dirname}/views/visitorRegistration.ejs`);
+    win.once('ready-to-show', () => {// wait for the window to be ready before showing it and firing the event
+        win.webContents.send('visitorData', visitorData);
+    });
+});
+
+ipcMain.on('reqUpdateVisitor', async function (event, id, obj) {
+    console.log(obj);
+    await visitorDataPageHandler.updateVisitor(win, id, obj);
+});
 
 /*
     #visitDataPage (visitDataPage.js)

@@ -2,6 +2,8 @@
     This file contains all the javascript codes for the establishment data page
 */
 
+const { ipcMain } = require("electron/main");
+
 /*
         *     @clar:add --> display all the establishment data to the table
         *             Tasks:
@@ -103,9 +105,6 @@ $('establishment.ejs').ready(async function(event){
 
     displayTable(getTableName(), dataArr);
 
-    $("input[type='checkbox']").click( function () {
-        getChecked();//update the list of checked element whenever the user checks a checkbox
-    });
 
 });
 
@@ -154,6 +153,10 @@ function displayTable(tableName, dataArr) {
             $(`#${getTableName()}TBL tbody tr#${id}`).append(addNewColumn);
         }
     }
+
+    $("input[type='checkbox']").click( function () {
+        getChecked();//update the list of checked element whenever the user checks a checkbox
+    });
 }
 
 $('#searchInput').keyup( function () {
@@ -205,5 +208,20 @@ function clearTable() {
     $('thead').empty();
     $('tbody').empty();
 }
+
+function getSelectedElements() {
+    return selectedElements;
+}
+
+$('#editBtn').click( function (event) {
+    event.preventDefault();
+    if(getSelectedElements().length == 1){
+        ipcRenderer.send('reqEditEstablishment', getSelectedElements()[0]);
+    }
+    
+});
+
+
+
     
 

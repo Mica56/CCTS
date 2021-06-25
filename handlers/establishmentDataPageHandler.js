@@ -5,6 +5,7 @@ const { dialog } = require('electron');
 const EstablishmentModel = require('../models/establishmentModel.js');
 const VisitorModel = require('../models/visitorModel.js');
 const VisitModel = require('../models/visitModel.js');
+const { findByIdAndUpdate } = require('../models/establishmentModel.js');
 
 
 
@@ -37,4 +38,38 @@ exports.deleteEstablishment = async function (win, id) {
             dialog.showMessageBoxSync(win, { type: 'warning', message: `Delete operation failed for id:${id[0]}. Please contact the developer.`});
         }
     }
+}
+
+exports.getEstablishment = async function (win, id) {
+    let establishment;
+    try {
+        establishment = await EstablishmentModel.findById({_id : mongoose.Types.ObjectId(id)});
+    } catch(err) {
+        console.log(err);
+        dialog.showMessageBoxSync(win, { type: 'warning', message: `Failed retrieving data with id: ${id}.\nPlease contact the developer.`});
+    }
+    return JSON.stringify(establishment);
+}
+
+exports.updateEstablishment = async function (win, id, obj) {
+    try{
+        console.log(obj);
+        await EstablishmentModel.findByIdAndUpdate(mongoose.Types.ObjectId(id), {
+            $set: {
+                name: obj.name,
+                address: obj.address,
+                owner: obj.owner,
+                contactNumber: obj.contactNumber,
+                email: obj.email,
+                username: obj.username,
+                password: obj.password
+            }
+            
+        });
+        dialog.showMessageBoxSync(win, { type: 'info', message: `Update sucess!`});
+    } catch (err) {
+        console.log(err);
+        dialog.showMessageBoxSync(win, { type: 'warning', message: `An error occured while updating obj with id: ${id}.\nPlease contact the developer.`});
+    }
+   
 }
