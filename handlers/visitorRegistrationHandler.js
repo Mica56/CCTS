@@ -19,13 +19,12 @@ exports.registerVisitor = async function (event, entity, win) {
         });
         await Visitor.save();
         console.log("Saved Visitor!");
-        dialog.showMessageBoxSync(win, {message: "Visitor registered successfully!"});
+        dialog.showMessageBoxSync(win, {type: 'info', message: "Visitor registered successfully!", title: `Registration`});
       
     } catch (err){
         console.log(err);
-        dialog.showMessageBoxSync(win, {message: "Visitor registeration failed! Please contact the developer."});
+        dialog.showMessageBoxSync(win, {type: 'error', message: "Visitor registeration failed! Please contact the developer.", title: `Registration`});
     }
-    win.loadURL(`file://${__dirname}/../views/registration.ejs`);
     /*  
         *   @das:add -->    Write the contents of the 'inputs' to the database
         *   Note: use the visitorModel

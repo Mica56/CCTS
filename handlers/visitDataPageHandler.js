@@ -8,7 +8,7 @@ const VisitModel = require('../models/visitModel.js');
 
 
 exports.getVisits = async function() {
-	var visits = await VisitModel.find({}, 'establishment visitor entered exited')
+	var visits = await VisitModel.find({}, 'establishment visitor covidStatus entered exited')
     .populate({path: 'establishment', select: 'name'})
     .populate({path: 'visitor', select: 'name'})
     .sort({ entered: -1}).exec();

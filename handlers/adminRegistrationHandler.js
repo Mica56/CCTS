@@ -20,12 +20,12 @@ exports.registerAdmin = async function (event,entity, win) {
     
     Admin.save(function (err) {
   		if (err) {  
-            dialog.showMessageBoxSync(win, {message: "Admin registered failed! Please contact the developer."});
+            dialog.showMessageBoxSync(win, {title: 'registration', type: 'error', message: "Admin registered failed! Please contact the developer."});
         }else {
             console.log("Saved Admin");
- 		    dialog.showMessageBoxSync(win, {message: "Admin registered successfully!"});
+ 		    dialog.showMessageBoxSync(win, {title: 'registration', type: 'info', message: "Admin registered successfully!"});
         }
 	});
 
-    win.loadURL(`file://${__dirname}/../views/registration.ejs`);
+    
 }

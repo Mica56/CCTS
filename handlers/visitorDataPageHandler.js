@@ -28,10 +28,10 @@ exports.deleteVisitor = async function (win, id) {
     for(let i = 0; i < id.length; ++i){
         try {
             await VisitorModel.findByIdAndDelete({_id : mongoose.Types.ObjectId(id[i])}).exec();
-            dialog.showMessageBoxSync(win, { type: 'warning', message: `Delete sucess!`});
+            dialog.showMessageBoxSync(win, { type: 'info', message: `Delete sucess!`, title: `Delete`});
         }catch(err) {
             console.log(err);
-            dialog.showMessageBoxSync(win, { type: 'warning', message: `Delete operation failed for id:${id[0]}. Please contact the developer.`});
+            dialog.showMessageBoxSync(win, { type: 'error', message: `Delete operation failed for id:${id[0]}. Please contact the developer.`});
         }
     }
 }
@@ -42,7 +42,7 @@ exports.getVisitor = async function (win, id) {
         visitor = await VisitorModel.findById({_id : mongoose.Types.ObjectId(id)});
     } catch(err) {
         console.log(err);
-        dialog.showMessageBoxSync(win, { type: 'warning', message: `Failed retrieving data with id: ${id}.\nPlease contact the developer.`});
+        dialog.showMessageBoxSync(win, { type: 'error', message: `Failed retrieving data with id: ${id}.\nPlease contact the developer.`});
     }
     return JSON.stringify(visitor);
 }
@@ -61,10 +61,10 @@ exports.updateVisitor = async function (win, id, obj) {
             }
             
         });
-        dialog.showMessageBoxSync(win, { type: 'info', message: `Update sucess!`});
+        dialog.showMessageBoxSync(win, { type: 'info', message: `Update sucess!`, title: `Update`});
     } catch (err) {
         console.log(err);
-        dialog.showMessageBoxSync(win, { type: 'warning', message: `An error occured while updating obj with id: ${id}.\nPlease contact the developer.`});
+        dialog.showMessageBoxSync(win, { type: 'error', message: `An error occured while updating obj with id: ${id}.\nPlease contact the developer.`, title: `Update`});
     }
    
 }

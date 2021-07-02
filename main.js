@@ -14,7 +14,7 @@ const scannerPageHandler = require('./handlers/scannerPageHandler.js');
 const establishmentDataPageHandler = require('./handlers/establishmentDataPageHandler.js');
 const visitDataPageHandler = require('./handlers/visitDataPageHandler.js');
 const visitorDataPageHandler = require('./handlers/visitorDataPageHandler.js');
-
+const loginPageHandler = require('./handlers/loginPageHandler.js');
 // import the registration handlers
 
 const adminRegistrationHandler = require('./handlers/adminRegistrationHandler.js');
@@ -70,12 +70,12 @@ let contactTracingTableWindow = null;
 /*
     Create the window
 */
-function createWindow (file) {
+function createWindow (folder, file) {
     window = new BrowserWindow({
       width: 800,
       height: 600,
       show: false,
-      fullscreen: true,
+      fullscreen: false,
       webPreferences: {
         preload: path.join(__dirname, 'preload.js'),
         contextIsolation: false,
@@ -83,21 +83,21 @@ function createWindow (file) {
       }
     });
     
-    window.loadURL('file://' + __dirname + '/views' + file);
+    window.loadURL(path.join('file://', __dirname, 'components', folder, 'html', file));
     return window;
 }
 
 
 
 app.whenReady().then(() => {
-    win = createWindow('/index.ejs');
+    win = createWindow('login', 'login.ejs');
     
     win.once('ready-to-show', () => {
         win.show()
     });
 
     app.on('activate', function () {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow('/index.ejs');
+        if (BrowserWindow.getAllWindows().length === 0) createWindow('login', 'login.ejs');
     });
     // console.log('window: ', win);
 });
@@ -107,6 +107,14 @@ app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit()
 });
 
+ipcMain.on('reqLogin', async function (event, loginCredentials) {
+    let matched = await loginPageHandler.authenticate(win, loginCredentials);
+
+    if(matched) {
+        // console.log(win)
+        win.loadURL(path.join('file://', __dirname, 'components', 'index', 'html', 'index.ejs'));
+    }
+});
 
 ipcMain.on('reqPrint', async function (event) {
 
@@ -126,23 +134,23 @@ ipcMain.on('reqPrintContactTracingTable', async function (event) {
 
 ipcMain.on('reqIndex', (event, msg)=>{
     console.log(msg);
-    win.loadURL(`file://${__dirname}/views/index.ejs`)
+    win.loadURL(path.join('file://', __dirname, 'components', 'index', 'html', 'index.ejs'));
 });
 
 ipcMain.on('reqData', (event, msg)=>{
     console.log(msg);
-    win.loadURL(`file://${__dirname}/views/establishment.ejs`);
+    win.loadURL(path.join('file://', __dirname, 'components', 'establishmentData', 'html', 'establishment.ejs'));
 });
 
-ipcMain.on('reqTree', (event, msg)=>{
-    console.log(msg);
-    win.loadURL(`file://${__dirname}/views/tree.ejs`)
-});
+// ipcMain.on('reqTree', (event, msg)=>{
+//     console.log(msg);
+//     win.loadURL(`file://${__dirname}/views/tree.ejs`)
+// });
 
 // for directing to register page
 ipcMain.on('reqRegister', (event, msg)=>{
     console.log(msg);
-    win.loadURL(`file://${__dirname}/views/registration.ejs`)
+    win.loadURL(path.join('file://', __dirname, 'components', 'registration', 'html', 'registration.ejs'));
 });
 
 ipcMain.on('test',visitorDataPageHandler.getVisitors);
@@ -157,19 +165,19 @@ ipcMain.on('test',visitorDataPageHandler.getVisitors);
 //for directing to establishment page
 ipcMain.on('reqEstablishment', (event, msg)=>{
     console.log(msg);
-    win.loadURL(`file://${__dirname}/views/establishment.ejs`);
+    win.loadURL(path.join('file://', __dirname, 'components', 'establishmentData', 'html', 'establishment.ejs'));
 
 });
 //for directing to visitor page
 ipcMain.on('reqVisitor', (event, msg)=>{
     console.log(msg);
-    win.loadURL(`file://${__dirname}/views/visitor.ejs`);
+    win.loadURL(path.join('file://', __dirname, 'components', 'visitorData', 'html', 'visitor.ejs'));
     
 });
 //for directing to visit data page
 ipcMain.on('reqVisit', (event, msg)=>{
     console.log(msg);
-    win.loadURL(`file://${__dirname}/views/visit.ejs`);
+    win.loadURL(path.join('file://', __dirname, 'components', 'visitData', 'html', 'visit.ejs'));
 });
 
 
@@ -186,13 +194,12 @@ ipcMain.handle('reqEstabData', function () {
 
 ipcMain.on('reqDeleteEstablishment', async function (event, id) {
     await establishmentDataPageHandler.deleteEstablishment(win, id);
+    win.loadURL(path.join('file://', __dirname, 'components', 'establishmentData', 'html', 'establishment.ejs'));
 });
 
 ipcMain.on('reqEditEstablishment', async function (event, id) {
-    
-    
     let establishmentData = await establishmentDataPageHandler.getEstablishment(win, id);
-    win.loadURL(`file://${__dirname}/views/establishmentRegistration.ejs`);
+    win.loadURL(path.join('file://', __dirname, 'components', 'establishmentRegistration', 'html', 'establishmentRegistration.ejs'));
     win.once('ready-to-show', () => {// wait for the window to be ready before showing it and firing the event
         win.webContents.send('establishmentData', establishmentData);
     });
@@ -201,6 +208,7 @@ ipcMain.on('reqEditEstablishment', async function (event, id) {
 ipcMain.on('reqUpdateEstablishment', async function (event, id, obj) {
     // console.log(obj);
     await establishmentDataPageHandler.updateEstablishment(win, id, obj);
+    win.loadURL(path.join('file://', __dirname, 'components', 'establishmentData', 'html', 'establishment.ejs'));
 })
 
 /*
@@ -216,13 +224,13 @@ ipcMain.handle('reqVisitorData', function () {
 
 ipcMain.on('reqDeleteVisitor', async function (event, id) {
     await visitorDataPageHandler.deleteVisitor(win, id);
+    win.loadURL(path.join('file://', __dirname, 'components', 'visitorData', 'html', 'visitor.ejs'));
 });
 
 ipcMain.on('reqEditVisitor', async function (event, id) {
-    
-    
+
     let visitorData = await visitorDataPageHandler.getVisitor(win, id);
-    win.loadURL(`file://${__dirname}/views/visitorRegistration.ejs`);
+    win.loadURL(path.join('file://', __dirname, 'components', 'visitorRegistration', 'html', 'visitorRegistration.ejs'));
     win.once('ready-to-show', () => {// wait for the window to be ready before showing it and firing the event
         win.webContents.send('visitorData', visitorData);
     });
@@ -231,6 +239,7 @@ ipcMain.on('reqEditVisitor', async function (event, id) {
 ipcMain.on('reqUpdateVisitor', async function (event, id, obj) {
     // console.log(obj);
     await visitorDataPageHandler.updateVisitor(win, id, obj);
+    win.loadURL(path.join('file://', __dirname, 'components', 'visitorData', 'html', 'visitor.ejs'));
 });
 
 /*
@@ -246,6 +255,7 @@ ipcMain.handle('reqVisitData', function () {
 
 ipcMain.on('reqDeleteVisit', async function (event, id) {
     await visitDataPageHandler.deleteVisit(win, id);
+    win.loadURL(path.join('file://', __dirname, 'components', 'visitData', 'html', 'visit.ejs'));
 })
 
 /*
@@ -295,7 +305,7 @@ ipcMain.on('invalidLevelInput', function (event, level) {// warn the user for in
 })
 
 ipcMain.on('createTreeFromVisit', function (event, obj) {// load the tree after clicking the row of visit data
-    win.loadURL(`file://${__dirname}/views/tree.ejs`);
+    win.loadURL(path.join('file://', __dirname, 'components', 'tree', 'html', 'tree.ejs'));
 
     win.webContents.once('did-finish-load', () => {// wait for the file to load before firing the event
         // console.log('`this `should only happen once');
@@ -320,7 +330,7 @@ ipcMain.on('reqTreeTable', function (event, data) {// create a new window for di
     data = JSON.parse(data);
     // console.log(data);
     
-    let newWindow = framelessWindow('/contactTracingTable.ejs');
+    let newWindow = framelessWindow('contactTracingTable', 'contactTracingTable.ejs');
     
     newWindow.once('ready-to-show', () => {// wait for the window to be ready before showing it and firing the event
         newWindow.show();
@@ -332,7 +342,7 @@ ipcMain.on('reqTreeTable', function (event, data) {// create a new window for di
 
 });
 
-function framelessWindow (file) {// for creating frameless window
+function framelessWindow (folder, file) {// for creating frameless window
     let newWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -347,7 +357,7 @@ function framelessWindow (file) {// for creating frameless window
         }
     });
 
-    newWindow.loadURL('file://' + __dirname + '/views' + file);
+    newWindow.loadURL(path.join('file://', __dirname, 'components', folder, 'html', file));
     return newWindow;
 }
 
@@ -368,18 +378,19 @@ function framelessWindow (file) {// for creating frameless window
 // for directing to the visitor registration page
 ipcMain.on('reqVisitorReg', (event, msg)=>{
     console.log(msg);
-    win.loadURL(`file://${__dirname}/views/visitorRegistration.ejs`);
+    win.loadURL(path.join('file://', __dirname, 'components', 'visitorRegistration', 'html', 'visitorRegistration.ejs'));
     // console.log('hey?');
 });
 // for directing to the establishment registration page
 ipcMain.on('reqEstabReg', (event, msg)=>{
     console.log(msg);
-    win.loadURL(`file://${__dirname}/views/establishmentRegistration.ejs`)
+    win.loadURL(path.join('file://', __dirname, 'components', 'establishmentRegistration', 'html', 'establishmentRegistration.ejs'));
 });
+
 // for directing to the admin registration page
 ipcMain.on('reqAdminReg', (event, msg)=>{
     console.log(msg);
-    win.loadURL(`file://${__dirname}/views/adminRegistration.ejs`)
+    win.loadURL(path.join('file://', __dirname, 'components', 'adminRegistration', 'html', 'adminRegistration.ejs'));
 });
 
 
@@ -392,6 +403,7 @@ ipcMain.on('reqAdminReg', (event, msg)=>{
 ipcMain.on('writeVisitorData', async function (event, entity) {
     try{
         await visitorRegistrationHandler.registerVisitor(event, entity, win);
+        win.loadURL(path.join('file://', __dirname, 'components', 'registration', 'html', 'registration.ejs'));
     } catch (err) {
         console.log(err);
     }
@@ -406,6 +418,7 @@ ipcMain.on('writeVisitorData', async function (event, entity) {
 ipcMain.on('writeEstabData', async function (event, entity) {
     try {
         await establishmentRegistrationHandler.registerEstablishment(event, entity, win);
+        win.loadURL(path.join('file://', __dirname, 'components', 'registration', 'html', 'registration.ejs'));
     } catch (err) {
         console.log(err);
     }
@@ -418,6 +431,11 @@ ipcMain.on('writeEstabData', async function (event, entity) {
 
 // for the request of writing the admin data into the database
 ipcMain.on('writeAdminData', function (event, entity) {
-    adminRegistrationHandler.registerAdmin(event, entity, win);
+    try{
+        adminRegistrationHandler.registerAdmin(event, entity, win);
+        win.loadURL(path.join('file://', __dirname, 'components', 'registration', 'html', 'registration.ejs'));
+    } catch (error) {
+        console.log(error);
+    }
     
 });

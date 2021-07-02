@@ -20,13 +20,13 @@ exports.registerEstablishment = async function (event, entity, win) {
 
         await Establishment.save();
         console.log("Saved Establishment!");
-        dialog.showMessageBoxSync(win, {message: "Establishment registered successfully!"});
+        dialog.showMessageBoxSync(win, {title: 'Registration', message: "Establishment registered successfully!", type: 'info'});
     } catch (err) {
         console.log(err);
-        dialog.showMessageBoxSync(win, {message: "Establishment registeration failed! Please contact the developer."});
+        dialog.showMessageBoxSync(win, {title: 'Registration', message: "Establishment registeration failed! Please contact the developer.", type: 'error'});
     }
 
-    win.loadURL(`file://${__dirname}/../views/registration.ejs`);
+    
     /*  
         *   @das:add -->    Write the contents of the 'inputs' to the database
         *   Note: use the establishmentModel

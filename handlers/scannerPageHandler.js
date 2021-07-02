@@ -21,6 +21,7 @@ exports.entrance = async (id) => {
         let visit = new VisitModel({
             establishment: establishment,
             visitor: visitor,
+            covidStatus: visitor.covidStatus
         });
 
         visit.save( function (err, visit) {
@@ -38,7 +39,7 @@ exports.entrance = async (id) => {
 
 exports.exit = async (id) => {
     console.log('exit:detected');
-    let visitor, establishment;
+    let visitor;
     // get the id of the visitor
     visitor = await VisitorModel.findById({_id: mongoose.Types.ObjectId(id) }).exec();
     console.log('visitor matched!');

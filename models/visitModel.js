@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const VisitSchema = new Schema({
     establishment: { type: Schema.Types.ObjectId, ref: 'Establishment'},
     visitor: { type: Schema.Types.ObjectId, ref: 'Visitor'},
+    covidStatus: { type: String, default: null},
     entered: { type: Date, default: Date.now },
     exited: { type: Date }
 });

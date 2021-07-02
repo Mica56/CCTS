@@ -6,24 +6,10 @@ const VisitModel = require('../models/visitModel.js');
 
 exports.buildTree = async function (root, level) {
 
-    if(!level){
+    if(!level && level!=''){// set the level as default [1] if no level is indicated
         level = 1;
     }
-    let currDeg = 1;// counter
-
-    // console.log(id);
-    
-    // let result = await VisitModel.findOne({ // get the root of the tree
-    //     visitor: mongoose.Types.ObjectId(id),
-    //     establishment: mongoose.Types.ObjectId('60cdc8ecef165f3a283e8534') 
-    //     }, 
-    // '_id establishment visitor entered exited')
-    // .sort({ entered: -1})
-    // .populate('visitor')
-    // .populate('establishment')
-    // .exec();
-    
-    // console.log(result.visitor.name, " entered: ", result.entered, "exited: ", result.exited);
+    let currLevel = 1;// counter
     
     let puis = await VisitModel.find({// get all the possibly infected individuals
         establishment: root.establishment._id,
@@ -48,41 +34,33 @@ exports.buildTree = async function (root, level) {
 
     
     // let root = transform(visitor);// tranform the object to be mutable
-    setObject(root);// set the name and title of the root node
-    // console.log(root);
-    // console.log('root: ', root);
-    // console.log(positives[i]);
+    setObject(root);// set the name and title property of the root node
     let exists = [root];// add the root to the repetition tracker array
     
     puis = transform(puis);// transform the objects to be mutable
-    setObjects(puis);// set the name and title elements of the object
+    setObjects(puis);// set the name and title property of the objects
     exists = exists.concat(puis);// add the two objects to the repetition tracker array
     // console.log(puis);
-    // get all the positives among the puis
 
     root.children = puis;// add the two puis as children of the root
 
 
-    let positives = puis;// set the array for looping
-    while(currDeg++ != level){// create the tree while there are positives
-        let tempPositives = [];
-        for(let i = 0; i < positives.length; ++i){// create the tree
-            // console.log('this is executed');
-            positives[i].children = [];// add the children property
-            // get the latest visit data for the possibly infected individual
-            // console.log('id: ', positives[i].visitor._id);
-
+    let visitors = puis;// set the array for looping
+    while(currLevel++ != level){// Create the tree while haven't reach the level input of user
+        let tempVisitors = [];
+        for(let i = 0; i < visitors.length; ++i){// create the tree
+            visitors[i].children = [];// add the children property for the current visitor
+            
+            // get the latest visit data for the possibly infected visitor
             let latestVisit = await VisitModel.findOne({ // get the latest visit data of the current visitor
-                visitor: mongoose.Types.ObjectId(positives[i].visitor._id)
+                visitor: mongoose.Types.ObjectId(visitors[i].visitor._id)
             })
             .sort({ entered: -1})
             .populate('visitor')
             .populate('establishment')
             .exec();
-            // console.log(latestVisit);
-            // @todo: Use the establishment to filter visitors visitors
             
-            // get the possibly infected individuals of the current visitor
+            // get the possibly infected individuals (pii) of the current visitor
             let piis = await VisitModel.find({
                 entered: {
                     $gt: latestVisit.entered,
@@ -93,27 +71,25 @@ exports.buildTree = async function (root, level) {
             .populate('establishment')
             .exec();
 
-            // console.log('piis', piis);
-            // setup the objects for
-            piis = transform(piis);
-            setObjects(piis);
+            // setup the objects for processing
+            piis = transform(piis);// transform the objects to be mutable
+            setObjects(piis);// set the name and title property of the objects
             
-            
-            for(let j = 0; j < piis.length; ++j){
+            // verify if the child is not yet in the tree before adding as a child
+            for(let j = 0; j < piis.length; ++j){ 
                 if(!exists.find(element => element.visitor._id == piis[j].visitor._id)){
-                    positives[i].children.push(piis[j]);
+                    visitors[i].children.push(piis[j]);
                     exists.push(piis[j]);
 
-                    tempPositives.push(piis[j]);
+                    tempVisitors.push(piis[j]);
                     }
             }
-            // console.log('temp positives: ', tempPositives);
         }
-        positives = tempPositives;
+        visitors = tempVisitors;// set the new visitors to iterate
 
         
     }
-    return JSON.stringify(root);
+    return JSON.stringify(root);// return the resulting tree
 }
 
 

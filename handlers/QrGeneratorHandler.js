@@ -48,10 +48,10 @@ exports.printPage = async function (win){
         pdfPath = path.join(os.homedir(), 'Desktop', 'temp.pdf');
         fs.writeFile(pdfPath, data, (error) => {
             if (error) throw error
-            console.log(`Wrote PDF successfully to ${pdfPath}`)
+            dialog.showMessageBox({message: `Wrote PDF successfully to ${pdfPath}`, type: "info", title: "QR-Code Generator"});
         });
     } catch (err) {
-        console.log(`Failed to write PDF to ${pdfPath}: `, err)
+        dialog.showMessageBox({message: `Failed to write PDF to ${pdfPath}.`, type: "error", title: "QR-Code Generator"});
     }
 }
     

@@ -15,7 +15,7 @@ exports.getEstablishments = async function() {
         establishments = await EstablishmentModel.find({}, '_id name address contactNumber email dateRegistered').exec();
         console.log('Establishment Data successfully loaded!');
     } catch (err) {
-        dialog.showMessageBoxSync(win, { type: 'warning', message: `An error has occured while getting the establishment data!\nPlease contact the developer`});
+        dialog.showMessageBoxSync(win, { type: 'error', message: `An error has occured while getting the establishment data!\nPlease contact the developer`});
         console.log(err);
     }
 	
@@ -32,10 +32,10 @@ exports.deleteEstablishment = async function (win, id) {
     for(let i = 0; i < id.length; ++i){
         try {
             await EstablishmentModel.findByIdAndDelete({_id : mongoose.Types.ObjectId(id[i])}).exec();
-            dialog.showMessageBoxSync(win, { type: 'warning', message: `Delete sucess!`});
+            dialog.showMessageBoxSync(win, { type: 'info', message: `Delete sucess!`});
         }catch(err) {
             console.log(err);
-            dialog.showMessageBoxSync(win, { type: 'warning', message: `Delete operation failed for id:${id[0]}. Please contact the developer.`});
+            dialog.showMessageBoxSync(win, { type: 'error', message: `Delete operation failed for id:${id[0]}. Please contact the developer.`});
         }
     }
 }
@@ -53,7 +53,7 @@ exports.getEstablishment = async function (win, id) {
 
 exports.updateEstablishment = async function (win, id, obj) {
     try{
-        console.log(obj);
+        // console.log(obj);
         await EstablishmentModel.findByIdAndUpdate(mongoose.Types.ObjectId(id), {
             $set: {
                 name: obj.name,
@@ -66,10 +66,10 @@ exports.updateEstablishment = async function (win, id, obj) {
             }
             
         });
-        dialog.showMessageBoxSync(win, { type: 'info', message: `Update sucess!`});
+        dialog.showMessageBoxSync(win, { title: 'Update', type: 'info', message: `Update sucess!`});
     } catch (err) {
         console.log(err);
-        dialog.showMessageBoxSync(win, { type: 'warning', message: `An error occured while updating obj with id: ${id}.\nPlease contact the developer.`});
+        dialog.showMessageBoxSync(win, { title: 'Update', type: 'error', message: `An error occured while updating obj with id: ${id}.\nPlease contact the developer.`});
     }
    
 }
