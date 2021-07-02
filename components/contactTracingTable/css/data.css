@@ -142,14 +142,14 @@ button{
 	height: 30px;
 }
 
-#option1{
+.option1{
 	height: 30px;
 	margin-top: 8px;
 	margin-left: 5px;
 	width: 93px;
 }
 
-#option2{
+.option2{
 	height: 30px;
 	margin-top: 8px;
 	margin-left: 15px;
