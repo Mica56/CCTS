@@ -42,7 +42,7 @@ Link: https://www.atlassian.com/git/tutorials/install-git
 
 Find a suitable area to put the files and type the command. 
 ```
-  - git clone https://github.com/Mica56/DAA-Project.git
+  - git clone https://github.com/Mica56/Contactless-Contact-Tracing-Solution-Using-QRCode-Technology
 ```
 # Add changes on the folder DAA-Project on your local machine.
 
